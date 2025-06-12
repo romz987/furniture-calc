@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # my apps
     'users',
     'furniture',
+    'reference',
 ]
 
 MIDDLEWARE = [
