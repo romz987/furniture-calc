@@ -46,20 +46,7 @@ class DoorType(models.Model):
         return f'{self.name}'
 
 
-class DoorHandle(models.Model):
-    name = models.CharField(max_length=25, verbose_name='дверная ручка')
-    length = models.SmallIntegerField(verbose_name='межцентровое расстояние')
-    material = models.CharField(max_length=25, verbose_name='материал ручки')
-    color = models.CharField(max_length=25, verbose_name='цвет ручки')
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-
-    class Meta:
-        verbose_name = 'door handle'
-        verbose_name_plural = 'door handles'
-        unique_together = ('name', 'length', 'material', 'color')
-
-
-
+# Summary
 class BoxSummary(models.Model):
     material_type = models.ForeignKey(MaterialType, on_delete=models.CASCADE, verbose_name='материал')
     material_thickness = models.ForeignKey(MaterialThickness, on_delete=models.CASCADE, verbose_name='толщина')
@@ -83,3 +70,16 @@ class DoorSummary(models.Model):
         verbose_name = 'materials summary'
         verbose_name_plural = 'materials summary'
         unique_together = ('material_type', 'material_thickness', 'material_color', 'door_type')
+
+
+class DoorHandle(models.Model):
+    name = models.CharField(max_length=25, verbose_name='дверная ручка')
+    length = models.SmallIntegerField(verbose_name='межцентровое расстояние')
+    material = models.CharField(max_length=25, verbose_name='материал ручки')
+    color = models.CharField(max_length=25, verbose_name='цвет ручки')
+    price_per_one = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='цена за единицу')
+
+    class Meta:
+        verbose_name = 'door handle'
+        verbose_name_plural = 'door handles'
+        unique_together = ('name', 'length', 'material', 'color')
