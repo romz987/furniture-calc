@@ -83,3 +83,6 @@ class DoorHandle(models.Model):
         verbose_name = 'door handle'
         verbose_name_plural = 'door handles'
         unique_together = ('name', 'length', 'material', 'color')
+
+    def __str__(self):
+        return f'{self.name}'
