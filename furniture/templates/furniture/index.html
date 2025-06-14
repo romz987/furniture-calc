@@ -1,1 +1,13 @@
-{% extends 'furniture/base.html' %} 
+{% extends 'furniture/base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    {% for object in objects_list %}
+      <div class="col-xl-3 col-md-6 mb-4">
+        {% include 'furniture/includes/inc_furniture_card.html' %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
