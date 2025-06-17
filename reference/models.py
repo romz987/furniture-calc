@@ -36,7 +36,6 @@ class MaterialColor(models.Model):
 
 class DoorType(models.Model):
     name = models.CharField(max_length=25, unique=True, verbose_name='тип дверей')
-    ru_name = models.CharField(max_length=25, unique=True, verbose_name='тип дверей на русском')
 
     class Meta:
         verbose_name = 'door type'
@@ -67,14 +66,14 @@ class DoorSummary(models.Model):
     price_per_sqm = models.DecimalField(max_digits=10, decimal_places=2) 
 
     class Meta:
-        verbose_name = 'materials summary'
-        verbose_name_plural = 'materials summary'
+        verbose_name = 'door summary'
+        verbose_name_plural = 'door summary'
         unique_together = ('material_type', 'material_thickness', 'material_color', 'door_type')
 
 
 class DoorHandle(models.Model):
     name = models.CharField(max_length=25, verbose_name='дверная ручка')
-    length = models.SmallIntegerField(verbose_name='межцентровое расстояние')
+    length = models.SmallIntegerField(verbose_name='межцентровое расстояние', null=True, blank=True)
     material = models.CharField(max_length=25, verbose_name='материал ручки')
     color = models.CharField(max_length=25, verbose_name='цвет ручки')
     price_per_one = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='цена за единицу')
