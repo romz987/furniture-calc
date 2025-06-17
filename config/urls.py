@@ -23,5 +23,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('furniture.urls', namespace='furniture'))
+    path('', include('furniture.urls', namespace='furniture')),
+    path('calculator/', include('wardrobe.urls', namespace='wardrobe')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
