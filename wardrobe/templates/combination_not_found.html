@@ -1,0 +1,22 @@
+{% extends 'furniture/base.html' %}
+
+{% block content %}
+  <div class="card shadow mb-4 border-left-danger">
+    <div class="card-header py-3">
+      <h2>{{ title }}</h2>
+    </div>
+    <div class="card-body">
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li class="text-danger">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    <div>
+    <div class="card-footer">
+      <a class="btn btn-secondary" href="{% url 'wardrobe:calculator' %}">Назад</a>
+    </div>
+  </div>
+{% endblock %}
+
