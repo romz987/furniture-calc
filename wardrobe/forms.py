@@ -18,3 +18,9 @@ class WardrobeForm(forms.Form):
     color = forms.ModelChoiceField(queryset=MaterialColor.objects.all(), label="Цвет материала", widget=forms.Select(attrs={"class": "form-control"}))
     door_type = forms.ModelChoiceField(queryset=DoorType.objects.all(), label="Тип дверей", widget=forms.Select(attrs={"class": "form-control"}))
     handle_type = forms.ModelChoiceField(queryset=DoorHandle.objects.all(), label="Ручки", to_field_name='name', widget=forms.Select(attrs={"class": "form-control"}))
+
+
+class SaveOrderForm(forms.Form):
+    customer_name = forms.CharField(label='Имя заказчика', widget=forms.TextInput(attrs={"class": "form-control"}))
+    customer_surname = forms.CharField(label='Фамилия заказчика', widget=forms.TextInput(attrs={"class": "form-control"}))
+    phone = forms.CharField(label='Номер телефона', widget=forms.TextInput(attrs={"class": "form-control"}))
