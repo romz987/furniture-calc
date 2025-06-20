@@ -4,14 +4,14 @@
 <!-- Card with form -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Конфигурация шкафа</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Сохранить заказ</h6>
     </div>
     <div class="card-body">
-        <form method="post" class="wardrobe">
+        <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <!-- Submit buttons -->
-            <button type="submit" class="btn btn-primary" value="calculate">Рассчитать</button>
+            <button type="submit" class="btn btn-success" value="calculate">Сохранить</button>
         </form>
     </div>
 </div>

@@ -1,0 +1,38 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+{% block content %}
+<!-- Card with form -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Смета</h6>
+    </div>
+    <div class="card-body">
+        <h4>Размеры</h4>
+        <p>Высота: {{ size.height }} мм.</p>
+        <p>Ширина: {{ size.width }} мм.</p>
+        <p>Глубина: {{ size.depth }} мм.</p>
+        <p>Плошадь короба: {{ size.box_square }} м<sup>2</sup>.</p>
+        <p>Площадь дверей: {{ size.door_square }} м<sup>2</sup>.</p>
+        <h4>Короб</h4>
+        <p>Материал: {{ info.material_type }}</p>
+        <p>Толщина: {{ info.material_thickness }} мм.</p>
+        <p>Цвет: {{ info.material_color }}</p>
+        <p>Стоимость: {{ info.box_price_per_sqm }} руб. за м<sup>2</sup>.</p>
+        <p>Общая стоимость короба: {{ info.box_price }} руб.</p>
+        <h4>Двери</h4>
+        <p>Тип дверей: {{ info.door_type }}</p>
+        <p>Стоимость: {{ info.door_price_per_sqm }} руб. за м<sup>2</sup>.</p>
+        <p>Общая стоимость дверей: {{ info.door_price }} руб.</p>
+        <h4>Фурнитура</h4>
+        <p>Ручки: {{ info.handle_type }}</p>
+        <p>Стоимость: {{ info.handle_price }} руб.</p> 
+        <h2>Общая стоимость шкафа</h2>
+        <p class="display-1">{{ info.total_price }} руб.<p>       
+    </div>
+    <div class="card-footer">
+      <a class="btn btn-secondary" href="{% url 'wardrobe:calculator' %}">Назад</a>
+      <a class="btn btn-success float-right" href="{% url 'wardrobe:save_order' %}">Сохранить</a>
+    </div>
+</div>
+<script src="{% static 'js/validation-main.js' %}"></script>
+{% endblock %}
