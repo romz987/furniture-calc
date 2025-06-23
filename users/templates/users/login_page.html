@@ -42,15 +42,18 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Авторизация</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="post" action="{% url 'users:user_login' %}">
+                                        {% csrf_token %}
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Введите адрес электронной почты...">
+                                          {{ form.email }}
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Введите пароль...">
+                                          {{ form.password }}
+                                          <div class="error-message text-danger" style="margin-top: 10px;">
+                                          {% for error in form.non_field_errors %}
+                                            {{ error }}
+                                          {% endfor %}
+                                          </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -58,16 +61,15 @@
                                                 <label class="custom-control-label" for="customCheck">Запомнить меня</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Логин
-                                        </a>
+                                        <hr>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Логин</button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Забыли пароль?</a>
+                                      <a class="small" href="{% url 'users:password_recovery' %}">Забыли пароль?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Создать аккаунт</a>
+                                      <a class="small" href="{% url 'users:user_register' %}">Создать аккаунт</a>
                                     </div>
                                 </div>
                             </div>
