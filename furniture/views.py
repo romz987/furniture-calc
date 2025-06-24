@@ -1,10 +1,11 @@
 from django.urls import reverse
 from django.views import View
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from furniture.models import Furniture 
 
 
-class FurnitureListView(View):
+class IndexView(LoginRequiredMixin, View):
     template = 'furniture/index.html'
 
     calc_urls = {
