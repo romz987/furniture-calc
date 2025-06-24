@@ -8,10 +8,10 @@ NULLABLE = {'blank': True, 'null': True}
 
 class User(AbstractUser):
     username = None
-    first_name = models.CharField(max_length=50, verbose_name='name', **NULLABLE)
-    last_name = models.CharField(max_length=50, verbose_name='surname', **NULLABLE)
+    first_name = models.CharField(max_length=50, verbose_name='first name', **NULLABLE)
+    last_name = models.CharField(max_length=50, verbose_name='last name', **NULLABLE)
     email = models.EmailField(unique=True, verbose_name='email')
-    phone = models.CharField(max_length=35, unique=True ,verbose_name='phone number', **NULLABLE)
+    phone = models.CharField(max_length=12, unique=True ,verbose_name='phone number', **NULLABLE)
     telegram = models.CharField(max_length=150, unique=True, verbose_name='telegram username', **NULLABLE)
     is_active = models.BooleanField(default=True, verbose_name='active')
     
