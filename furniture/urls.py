@@ -1,10 +1,10 @@
 from django.urls import path
 from furniture.apps import FurnitureConfig
-from furniture.views import FurnitureListView
+from furniture.views import IndexView
 
 app_name = FurnitureConfig.name
 
 
 urlpatterns = [
-    path('', FurnitureListView.as_view(), name='index'),
+    path('', IndexView.as_view(), name='index'),
 ]
