@@ -30,7 +30,7 @@ class Orders(models.Model):
     handle_name = models.CharField(max_length=35, verbose_name='тип дверной ручки')
     handle_material = models.CharField(max_length=35, verbose_name='материал дверной ручки')
     handle_color = models.CharField(max_length=35, verbose_name='цвет дверной ручки')
-    handle_length = models.CharField(max_length=35, verbose_name='длинна дверной ручки')
+    handle_length = models.CharField(max_length=35, verbose_name='длинна дверной ручки', null=True, blank=True)
     handle_price_per_one = models.IntegerField(verbose_name='цена дверной ручки за единицу')
     handle_ammount = models.IntegerField(verbose_name='количество дверных ручек')
     handle_price = models.IntegerField(verbose_name='цена дверной ручки')
