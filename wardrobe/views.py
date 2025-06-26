@@ -341,3 +341,16 @@ def orders_list_view(request):
         'objects_list': objects_list
     }
     return render(request, 'wardrobe_orders_list.html', context=context)
+
+
+@login_required
+def order_delete_view(request, pk):
+    order = get_object_or_404(Orders, pk=pk)
+    context = {
+        'title': 'Вы уверены, что хотите удалить заказ?',
+        'order': order
+    }
+    if request.method == 'POST':
+        order.delete()
+        return redirect('wardrobe:show_wardrobe_orders')
+    return render(request, 'confirm_delete.html', context=context)
