@@ -142,7 +142,7 @@
 
       <div class="card-footer">
         <a class="btn btn-secondary" href="{% url 'wardrobe:show_wardrobe_orders' %}">Назад</a>
-        <a class="btn btn-danger float-right" href="{% url 'wardrobe:show_wardrobe_orders' %}">Удалить</a>
+        <a class="btn btn-danger float-right" href="{% url 'wardrobe:order_delete' customer_data.order_id %}">Удалить</a>
         <a class="btn btn-success float-right" style="margin-right: 20px;" href="{% url 'wardrobe:show_wardrobe_orders' %}">Изменить</a>
 
       </div>
