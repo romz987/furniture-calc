@@ -29,19 +29,20 @@ class CalculateWardrobe:
         # Распаковываем необходимые данные
         box_price_per_sqm = info["box_price_per_sqm"]
         door_price_per_sqm = info["door_price_per_sqm"]
-        handle_price = info["handle_price"]
+        handle_price = info["handle_price_per_one"] * info["handle_ammount"]
         # Считаем площади
         box_square = self.calc_box_square(size)
         door_square = self.calc_door_square(size)
         # Считаем цену коробки и дверей
         box_price = box_price_per_sqm * box_square
         door_price = door_price_per_sqm * door_square
-        total_price = math.ceil(box_price + door_price + handle_price * 2)
+        total_price = math.ceil(box_price + door_price + handle_price)
         # Сохраняем результат в словарь
         size["box_square"] = box_square
         size["door_square"] = door_square
         info["box_price"] = box_price
         info["door_price"] = door_price
+        info["handle_price"] = handle_price
         info["total_price"] = total_price
         return size, info       
 
