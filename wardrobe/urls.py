@@ -11,5 +11,5 @@ urlpatterns = [
     path('save_order/', WardrobeSaveOrderView.as_view(), name='save_order'),
     path('save_order_success/', save_order_success_view, name='save_order_success'),
     path('orders/', orders_list_view, name='show_wardrobe_orders'),
-    path('order_detail/<int:pk>/', WardrobeOrderDetailView.as_view(), name='show_wardrobe_order_detial'), 
+    path('order_detail/<int:pk>/', WardrobeOrderDetailView.as_view(), name='show_wardrobe_order_detail'), 
 ]
