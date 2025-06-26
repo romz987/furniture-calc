@@ -1,0 +1,15 @@
+{% extends 'furniture/base.html' %}
+
+{% block content %}
+  <div class="card shadow mb-4 border-left-success">
+    <div class="card-header py-3">
+      <h2>Статус заказа</h2>
+    </div>
+    <div class="card-body">
+      <p class="display-4"> Заказ успешно сохранен! </p>
+    <div>
+    <div class="card-footer">
+      <a class="btn btn-secondary" href="{% url 'furniture:index' %}">На главную</a>
+    </div>
+  </div>
+{% endblock %}

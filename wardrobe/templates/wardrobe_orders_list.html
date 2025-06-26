@@ -1,0 +1,58 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Список заказов шкафов</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3"></div>
+    <div class="card-body">
+
+      <div class="table-responsive">
+        <table id="dataTable" class="table table-bordered" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Номер заказа</th>
+              <th>Дата заказа</th>
+              <th>Имя заказчика</th>
+              <th>Стоимость заказа</th>
+              <th>Телефон</th>
+              <th>Email</th>
+              <th>Подробнее</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for object in objects_list %}
+              <tr>
+                <td>{{ object.id }}</td>
+                <td>{{ object.order_date }}</td>
+                <td>{{ object.customer_name }} {{ object.customer_surname }}</td>
+                <td>{{ object.total_price }} руб</td>
+                <td>{{ object.phone }}</td>
+                <td>{{ object.email }}</td>
+                <td><a class="" style="cursor: pointer;">Подробности</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+{% endblock %}
