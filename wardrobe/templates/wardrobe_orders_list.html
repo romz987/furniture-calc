@@ -35,7 +35,7 @@
                 <td>{{ object.total_price }} руб</td>
                 <td>{{ object.phone }}</td>
                 <td>{{ object.email }}</td>
-                <td><a class="" style="cursor: pointer;">Подробности</a></td>
+                <td><a href="{% url 'wardrobe:show_wardrobe_order_detail' object.id %}" style="cursor: pointer;">Подробности</a></td>
               </tr>
             {% endfor %}
           </tbody>
