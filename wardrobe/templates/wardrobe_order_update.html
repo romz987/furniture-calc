@@ -10,15 +10,16 @@
 
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 style="font-size: 1.5rem;">Данные заказчика</h6>       
+        <h6 style="font-size: 1.5rem;">Обновить данные заказчика</h6>       
       </div>
 
       <div class="card-body">
-        <p>Имя: {{ customer_data.customer_name }}</p>
-        <p>Фамилия: {{ customer_data.customer_surname }}</p>
-        <p>Телефон: {{ customer_data.phone }}</p>
-        <p>Email: {{ customer_data.email }}</p>
-        <p>Дата заказа: {{ customer_data.order_date }}</p>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <a class="btn btn-secondary" href="{% url 'wardrobe:show_wardrobe_orders' %}">Назад</a>
+          <button type="submit" class="btn btn-success float-right">Сохранить</button>
+        </form>
       </div>
     </div>
 
@@ -44,9 +45,9 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{ order_size.height }}</td>
-                <td>{{ order_size.width }}</td>
-                <td>{{ order_size.depth }}</td>
+                <td>{{ object.height }}</td>
+                <td>{{ object.width }}</td>
+                <td>{{ object.depth }}</td>
               </tr>
             </tbody>
           </table>
@@ -67,15 +68,15 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{ order_info.material_type}}</td>
-                <td>{{ order_info.box_material_thickness}}</td>
-                <td>{{ order_info.box_material_color}}</td>
-                <td>{{ order_info.box_price_per_sqm}}</td>
-                <td>{{ order_info.box_square}}</td>
+                <td>{{ object.material_type}}</td>
+                <td>{{ object.box_material_thickness}}</td>
+                <td>{{ object.box_material_color}}</td>
+                <td>{{ object.box_price_per_sqm}}</td>
+                <td>{{ object.box_square}}</td>
               </tr>
             </tbody>
           </table>
-          <p style="font-size: 1.2 rem">Общая стоимсоть короба: {{ order_info.box_price }} руб. </p>
+          <p style="font-size: 1.2 rem">Общая стоимсоть короба: {{ object.box_price }} руб. </p>
 
           <br>
           <br>
@@ -93,15 +94,15 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{ order_info.door_type }}</td>
-                <td>{{ order_info.door_material_thickness }}</td>
-                <td>{{ order_info.door_material_color }}</td>
-                <td>{{ order_info.door_price_per_sqm }}</td>
-                <td>{{ order_info.door_square }}</td>
+                <td>{{ object.door_type }}</td>
+                <td>{{ object.door_material_thickness }}</td>
+                <td>{{ object.door_material_color }}</td>
+                <td>{{ object.door_price_per_sqm }}</td>
+                <td>{{ object.door_square }}</td>
               </tr>
             </tbody>
           </table>
-          <p style="font-size: 1.2 rem">Общая стоимсоть дверей: {{ order_info.door_price }} руб. </p>
+          <p style="font-size: 1.2 rem">Общая стоимсоть дверей: {{ object.door_price }} руб. </p>
 
           <br>
           <br>
@@ -120,35 +121,29 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{ order_info.handle_name }}</td>
-                <td>{{ order_info.handle_color }}</td>
-                <td>{{ order_info.handle_material }}</td>
-                <td>{{ order_info.handle_length|default:'нет' }}</td>
-                <td>{{ order_info.handle_price_per_one }}</td>
-                <td>{{ order_info.handle_ammount }}</td>
+                <td>{{ object.handle_name }}</td>
+                <td>{{ object.handle_color }}</td>
+                <td>{{ object.handle_material }}</td>
+                <td>{{ object.handle_length|default:'нет' }}</td>
+                <td>{{ object.handle_price_per_one }}</td>
+                <td>{{ object.handle_ammount }}</td>
               </tr>
             </tbody>
           </table>
-        <p style="font-size: 1.2 rem">Общая стоимсоть ручек: {{ order_info.handle_price }} руб. </p>
+        <p style="font-size: 1.2 rem">Общая стоимсоть ручек: {{ object.handle_price }} руб. </p>
           
           <br>
           <br>
 
           <h6 style="font-size: 1.6rem; margin-bottom: 25px;">Общая стоимость шкафа:</h6>
-          <p style="font-size: 3rem; margin-left: 50px;"> {{ order_info.total_price }} руб. </p>
+          <p style="font-size: 3rem; margin-left: 50px;"> {{ object.total_price }} руб. </p>
 
         </div>
-      </div>
-
-      <div class="card-footer">
-        <a class="btn btn-secondary" href="{% url 'wardrobe:show_wardrobe_orders' %}">Назад</a>
-        <a class="btn btn-danger float-right" href="{% url 'wardrobe:order_delete' customer_data.order_id %}">Удалить</a>
-        <a class="btn btn-success float-right" style="margin-right: 20px;" href="{% url 'wardrobe:wardrobe_order_update' customer_data.order_id %}">Изменить</a>
-
       </div>
 
     </div>
 
 </div>
 {% endblock %}
+
 
