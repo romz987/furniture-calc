@@ -1,7 +1,9 @@
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.views import View
+from django.views import View 
+from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -15,12 +17,12 @@ from reference.models import (
     DoorHandle,
 )
 from .services import CalculateWardrobe
-from .forms import WardrobeForm, SaveOrderForm
+from .forms import WardrobeForm, SaveOrderForm, UpdateOrderForm
 from .models import Orders
 
 
 class WardrobeView(LoginRequiredMixin, View):
-    template = 'wardrobe.html'
+    template_name = 'wardrobe.html'
     template_result = 'wardrobe_result.html'
     model_mtypes = MaterialType
     model_thicknesses = MaterialThickness
@@ -36,7 +38,7 @@ class WardrobeView(LoginRequiredMixin, View):
         context = {
             'form': form,
         }
-        return render(request, self.template, context=context)
+        return render(request, self.template_name, context=context)
 
     def post(self, request):
         form = self.form_class(request.POST, **self.get_form_kwargs())
@@ -46,11 +48,11 @@ class WardrobeView(LoginRequiredMixin, View):
             # Получаем стоимости за квадратный метр
             info["box_price_per_sqm"] = self.get_box_material_price(info)
             if not info["box_price_per_sqm"]:
-                messages.error(request, "Комбинация для корпуса не найдена")
+                request.session['combination_error'] = 'box'
                 return redirect('wardrobe:combination_not_found')
             info["door_price_per_sqm"] = self.get_door_material_price(info)
             if not info["door_price_per_sqm"]:
-                messages.error(request, "Комбинация для двери не найдена")
+                request.session['combination_error'] = 'door'
                 return redirect('wardrobe:combination_not_found')
             # Получаем данные выбранной ручки 
             info.update(self.get_handle_data(info))
@@ -68,10 +70,11 @@ class WardrobeView(LoginRequiredMixin, View):
                 self.template_result, 
                 {'form': form, 'size': size, 'info': info}
             )
-        return render(request, self.template, {'form': form})
+        return render(request, self.template_name, {'form': form})
 
     def get_form_kwargs(self):
         kwargs = {}
+        # результат
         # uq_box_materials
         kwargs["materials"] = self.get_form_data(
             self.model_mtypes, self.model_box_summary, "material_type")
@@ -177,13 +180,17 @@ class WardrobeView(LoginRequiredMixin, View):
 
 
 class WardrobeSaveOrderView(LoginRequiredMixin, View):
-    template = 'wardrobe_save_order.html'
+    template_name = 'wardrobe_save_order.html'
     model_orders = Orders
     form_class = SaveOrderForm
 
     def get(self, request):
+        # Проверим, существует ли заказ
+        if 'wardrobe_info' not in request.session \
+            and 'wardrobe_size' not in request.session:
+                return redirect('wardrobe:calculator')
         form = self.form_class()
-        return render(request, self.template, {'form': form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -193,13 +200,13 @@ class WardrobeSaveOrderView(LoginRequiredMixin, View):
                 return data
             size, info = data
             self.save_order(request, form, size, info)
+            request.session["save_order"] = True
         return redirect('wardrobe:save_order_success')
     
     def get_data_from_session(self, request):
         size = request.session.get('wardrobe_size')
         info = request.session.get('wardrobe_info')
         if not size or not info:
-            messages.error(request, "Данные расчёта не найдены.")
             return redirect('wardrobe:calculator')
         return size, info
 
@@ -243,11 +250,10 @@ class WardrobeSaveOrderView(LoginRequiredMixin, View):
             # дата
             order_date=timezone.now()
         )
-        messages.success(request, 'заказ успешно сохранен')
 
 
 class WardrobeOrderDetailView(LoginRequiredMixin, View):
-    template = 'wardrobe_order_details.html'
+    template_name = 'wardrobe_order_details.html'
     model_orders = Orders
 
     def get(self, request, pk):
@@ -260,7 +266,7 @@ class WardrobeOrderDetailView(LoginRequiredMixin, View):
             'order_size': order_size,
             'order_info': order_info,
         }
-        return render(request, self.template, context=context)
+        return render(request, self.template_name, context=context)
 
     def prepare_customer_data(self, order_record):
         return {
@@ -323,19 +329,16 @@ class WardrobeOrderDetailView(LoginRequiredMixin, View):
         return info
 
 
-@login_required
-def combination_not_found_view(request):
-    return render(request, 'combination_not_found.html', {'title': 'Ошибка'})
-
-
-@login_required
-def save_order_success_view(request):
-    return render(request, 'wardrobe_save_order_success.html')
+class OrderUpdateView(LoginRequiredMixin, UpdateView):
+    model = Orders 
+    form_class = UpdateOrderForm
+    template_name = 'wardrobe_order_update.html'
+    success_url = reverse_lazy('wardrobe:show_wardrobe_orders')
 
 
 @login_required
 def orders_list_view(request):
-    objects_list = Orders.objects.all()
+    objects_list = Orders.objects.filter(owner=request.user)
     context = {
         'title': 'Заказы шкафов',
         'objects_list': objects_list
@@ -354,3 +357,25 @@ def order_delete_view(request, pk):
         order.delete()
         return redirect('wardrobe:show_wardrobe_orders')
     return render(request, 'confirm_delete.html', context=context)
+
+
+@login_required
+def save_order_success_view(request):
+    # Проверим на переход по прямой ссылке
+    if not request.session.get('save_order'):
+        return redirect('wardrobe:calculator')
+    return render(request, 'wardrobe_save_order_success.html')
+
+
+@login_required
+def combination_not_found_view(request):
+    # Проверим на переход по прямой ссылке
+    error = request.session.pop('combination_error', None)
+    if not error:
+        return redirect('wardrobe:calculator')
+    # результат
+    context = {
+        'title': 'Ошибка комплекта',
+        'error': error
+    }
+    return render(request, 'combination_not_found.html', context=context)
