@@ -4,9 +4,9 @@ from django.conf import settings
 
 class Orders(models.Model):
     # клиент
-    customer_name = models.CharField(max_length=50, verbose_name='first name')
-    customer_surname = models.CharField(max_length=50, verbose_name='last_name')
-    phone = models.CharField(max_length=12, verbose_name='phone number')
+    customer_name = models.CharField(max_length=50, verbose_name='имя заказчика')
+    customer_surname = models.CharField(max_length=50, verbose_name='фамилия заказчика')
+    phone = models.CharField(max_length=12, verbose_name='телефон заказчика')
     email = models.EmailField(verbose_name='email')
     # размеры
     height = models.IntegerField()
