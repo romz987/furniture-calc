@@ -6,6 +6,7 @@ from reference.models import (
     DoorType, 
     DoorHandle
 )
+from wardrobe.models import Orders
 
 
 class WardrobeForm(forms.Form):
@@ -46,3 +47,16 @@ class SaveOrderForm(forms.Form):
     customer_surname = forms.CharField(label='Фамилия заказчика', widget=forms.TextInput(attrs={"class": "form-control"}))
     phone = forms.CharField(label='Номер телефона', widget=forms.TextInput(attrs={"class": "form-control"}))
     email = forms.EmailField(label='Электронная почта', widget=forms.TextInput(attrs={"class": "form-control"}))
+
+
+
+class UpdateOrderForm(forms.ModelForm):
+    class Meta:
+        model = Orders
+        fields = ['customer_name', 'customer_surname', 'phone', 'email'] 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({"class": "form-control"})
+
