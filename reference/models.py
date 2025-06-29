@@ -50,7 +50,7 @@ class BoxSummary(models.Model):
     material_type = models.ForeignKey(MaterialType, on_delete=models.CASCADE, verbose_name='материал')
     material_thickness = models.ForeignKey(MaterialThickness, on_delete=models.CASCADE, verbose_name='толщина')
     material_color = models.ForeignKey(MaterialColor, on_delete=models.CASCADE, verbose_name='цвет')
-    price_per_sqm = models.DecimalField(max_digits=10, decimal_places=2) 
+    price_per_sqm = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='цена за квадратный метр') 
 
     class Meta:
         verbose_name = 'box materials summary'
@@ -63,7 +63,7 @@ class DoorSummary(models.Model):
     material_thickness = models.ForeignKey(MaterialThickness, on_delete=models.CASCADE, verbose_name='толщина')
     material_color = models.ForeignKey(MaterialColor, on_delete=models.CASCADE, verbose_name='цвет')
     door_type = models.ForeignKey(DoorType, on_delete=models.CASCADE, verbose_name='тип дверей')
-    price_per_sqm = models.DecimalField(max_digits=10, decimal_places=2) 
+    price_per_sqm = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='цена за квадратный метр') 
 
     class Meta:
         verbose_name = 'door summary'
