@@ -1,6 +1,4 @@
 {% load static %}
-<p>User is authenticated: {{ user.is_authenticated }}</p>
-<p>User: {{ user }}</p>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +20,8 @@
 
     <!-- Custom styles for this template--> 
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for dataTables --> 
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
 
 </head>
 
@@ -80,7 +80,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Шкаф</a>
+                      <a class="collapse-item" href="{% url 'wardrobe:calculator' %}">Шкаф</a>
                         <a class="collapse-item" href="utilities-border.html">Комод</a>
                         <a class="collapse-item" href="utilities-animation.html">Кухня</a>
                     </div>
@@ -104,25 +104,37 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Компоненты:</h6>
+                        <h6 class="collapse-header">Материалы:</h6>
+                        <a class="collapse-item" href="{% url 'reference:ref_boxsummary' %}">Короб</a>
+                        <a class="collapse-item" href="{% url 'reference:ref_doorsummary' %}">Двери</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Свойства:</h6>
                         <a class="collapse-item" href="">Материал</a>
                         <a class="collapse-item" href="">Толщина</a>
                         <a class="collapse-item" href="">Цвет</a>
                         <a class="collapse-item" href="">Тип дверей</a>
-                        <a class="collapse-item" href="">Мебельные ручки</a>
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Сводные таблицы:</h6>
-                        <a class="collapse-item" href="">Материалы</a>
-                        <a class="collapse-item" href="">Двери</a>
+                        <h6 class="collapse-header">Фурнитура:</h6>
+                        <a class="collapse-item" href="">Мебельные ручки</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Заказы</span></a>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders"
+                    aria-expanded="true" aria-controls="collapseOrders">
+                    <i class="fa fa-calculator"></i>
+                    <span>Заказы</span>
+                </a>
+                <div id="collapseOrders" class="collapse" aria-labelledby="headingOrders"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{% url 'wardrobe:show_wardrobe_orders' %}">Шкафы</a>
+                        <a class="collapse-item" href="utilities-border.html">Комоды</a>
+                        <a class="collapse-item" href="utilities-animation.html">Кухни</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -228,5 +240,6 @@
 <!-- <script src="{% static 'js/demo/chart-area-demo.js' %}"></script> -->
 <!-- <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script> -->
 
+{% block scripts %}{% endblock %}
 </body>
 </html>
