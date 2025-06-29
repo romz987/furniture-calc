@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('users.urls', namespace='users')),
     path('', include('furniture.urls', namespace='furniture')),
+    # references 
+    path('reference/', include('reference.urls', namespace='reference')),
     # furniture apps
     path('wardrobe/', include('wardrobe.urls', namespace='wardrobe')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
