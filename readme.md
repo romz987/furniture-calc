@@ -27,9 +27,9 @@
 ----
 ## Представления 
 
-### reference
+### reference application  
 **CBV:**  
-BoxSummaryCreateView  
+**BoxSummaryCreateView**  
 Представление управляет отображением страницы создания записи о материале короба  
 Шаблоны:    
     - box/box_reference_create.html  
@@ -39,7 +39,7 @@ BoxSummaryCreateView
     - UpdateBoxSummaryForm  
   
   
-BoxSummaryUpdateView  
+**BoxSummaryUpdateView**  
 Представление управляет отображением страницы обновления записи о материале короба  
 Шаблоны:  
     - box/box_reference_update.html  
@@ -49,7 +49,7 @@ BoxSummaryUpdateView
     - UpdateBoxSummaryForm  
   
   
-DoorSummaryCreateView  
+**DoorSummaryCreateView**   
 Представление управляет отображением страницы создания записи о материале двери  
 Шаблоны:    
     - door/door_reference_create.html  
@@ -59,7 +59,7 @@ DoorSummaryCreateView
     - UpdateDoorSummaryForm  
   
   
-DoorSummaryUpdateView  
+**DoorSummaryUpdateView**  
 Представление управляет отображением страницы обновления записи о материале двери  
 Шаблоны:  
     - door/door_reference_update.html  
@@ -70,26 +70,26 @@ DoorSummaryUpdateView
   
   
 **FBV:**  
-boxsummary_show_view   
+**boxsummary_show_view**  
 Представление управляет отображением страницы таблицы материалов короба  
   
   
-boxsummary_delete_view   
+**boxsummary_delete_view**   
 Представление управляет удалением записи из таблицы материалов короба  
   
   
-doorsummary_show_view  
+**doorsummary_show_view**  
 Представление управляет отображением страницы таблицы материалов дверей  
 
 
-doorsummary_delete_view   
+**doorsummary_delete_view**   
 Представление управляет удалением записи из таблицы материалов дверей  
   
   
   
 ### wardrobe  
 **CBV:**  
-WardrobeView  
+**WardrobeView**  
 Представление управляет отображением страницы калькулятора шкафа  
 Шаблоны:   
     - wardrobe.html         - страница калькулятора  
@@ -106,7 +106,7 @@ WardrobeView
     - WardrobeForm  
   
   
-WardrobeSaveOrderView  
+**WardrobeSaveOrderView** 
 Представление управляет страницей сохранения заказа  
 Шаблоны:  
     - wardrobe_save_order.html  -  
@@ -116,7 +116,7 @@ WardrobeSaveOrderView
     - SaveOrderForm  
   
   
-WardrobeOrderDetailView   
+**WardrobeOrderDetailView**   
 Представление управляет страницей деталей заказа (данные заказчика и смета)  
 Шаблоны:  
     - wardrobe_order_details.html   
@@ -124,7 +124,7 @@ WardrobeOrderDetailView
     - Orders    
   
   
-OrderUpdateView   
+**OrderUpdateView**   
 Представление управляет страницей обновления данных заказа  
 Шабоны:  
     - wardrobe_order_update.html  
@@ -135,17 +135,17 @@ OrderUpdateView
   
   
 **FBV:**  
-orders_list_view  
+**orders_list_view**     
 Представление управляет страницей таблицы заказов   
   
   
-order_delete_view  
+**order_delete_view**    
 Представление управляет страницей удаления заказа  
   
   
-save_order_success_view  
+**save_order_success_view**    
 Представление управляет страницей, сообщающей об удачном сохранении заказа   
   
   
-combination_not_found_view  
+**combination_not_found_view**    
 Представление управляет страницей, сообщающей об отсутствии компонентов по сочетанию характеристик  
