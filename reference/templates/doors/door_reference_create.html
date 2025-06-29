@@ -1,0 +1,24 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container-fluid">
+
+    <div class="card shadow mb-4">
+
+      <div class="card-header py-3">
+        <h6 style="font-size: 1.5rem;">{{ title }}</h6>       
+      </div>
+
+      <div class="card-body">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <a class="btn btn-secondary" href="{% url 'reference:ref_doorsummary' %}">Назад</a>
+          <button type="submit" class="btn btn-success float-right" style="margin-right: 20px;">Сохранить</button>
+      </div>
+
+    </div>
+
+</div>
+{% endblock %}
