@@ -9,6 +9,10 @@ from reference.views import (
     DoorSummaryUpdateView, 
     doorsummary_delete_view, 
     DoorSummaryCreateView,
+    handles_show_view,
+    HandlesUpdateView,
+    handles_delete_view,
+    HandlesCreateView,
 )
 
 app_name = ReferenceConfig.name
@@ -16,15 +20,19 @@ app_name = ReferenceConfig.name
 
 urlpatterns = [
     # box_summary
-    path('box_summary_create', BoxSummaryCreateView.as_view(), name='ref_boxsummary_create'),
-    path('box_summary/', boxsummary_show_view, name='ref_boxsummary'),
-    path('box_summary_update/<int:pk>', BoxSummaryUpdateView.as_view(), name='ref_boxsummary_update'),
-    path('box_summary_delete/<int:pk>', boxsummary_delete_view, name='ref_boxsummary_delete'),
+    path('box-summary-create', BoxSummaryCreateView.as_view(), name='ref_boxsummary_create'),
+    path('box-summary/', boxsummary_show_view, name='ref_boxsummary'),
+    path('box-summary-update/<int:pk>', BoxSummaryUpdateView.as_view(), name='ref_boxsummary_update'),
+    path('box-summary-delete/<int:pk>', boxsummary_delete_view, name='ref_boxsummary_delete'),
     # door_summary
-    path('door_summary_create', DoorSummaryCreateView.as_view(), name='ref_doorsummary_create'),
-    path('door_summary', doorsummary_show_view, name='ref_doorsummary'),
-    path('door_summary_update/<int:pk>', DoorSummaryUpdateView.as_view(), name='ref_doorsummary_update'),
-    path('door_summary_delete/<int:pk>', doorsummary_delete_view, name='ref_doorsummary_delete'),
-    # свойста
-    # фурнитура
+    path('door-summary-create', DoorSummaryCreateView.as_view(), name='ref_doorsummary_create'),
+    path('door-summary', doorsummary_show_view, name='ref_doorsummary'),
+    path('door-summary-update/<int:pk>', DoorSummaryUpdateView.as_view(), name='ref_doorsummary_update'),
+    path('door-summary-delete/<int:pk>', doorsummary_delete_view, name='ref_doorsummary_delete'),
+    # fitting
+    path('fitting-create', HandlesCreateView.as_view(), name="ref_fitting_create"),
+    path('fitting/', handles_show_view, name='ref_fitting'),
+    path('fitting-update/<int:pk>', HandlesUpdateView.as_view(), name="ref_fitting_update"),
+    path('fitting-delete/<int:pk>', handles_delete_view, name="ref_fitting_delete"),
+    # properties
 ]
