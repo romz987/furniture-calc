@@ -1,5 +1,5 @@
 from django import forms
-from reference.models import BoxSummary, DoorSummary
+from reference.models import BoxSummary, DoorSummary, DoorHandle
 
 
 class UpdateBoxSummaryForm(forms.ModelForm):
@@ -17,6 +17,17 @@ class UpdateDoorSummaryForm(forms.ModelForm):
     class Meta:
         model = DoorSummary
         fields = ['door_type', 'material_type', 'material_thickness', 'material_color', 'price_per_sqm'] 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({"class": "form-control"})
+
+
+class UpdateFittingForm(forms.ModelForm):
+    class Meta:
+        model = DoorHandle
+        fields = ['name', 'length', 'material', 'color', 'price_per_one'] 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
