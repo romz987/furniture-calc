@@ -1,0 +1,61 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">{{ title }}</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3"></div>
+    <div class="card-body">
+
+      <div class="table-responsive">
+        <table id="dataTable" class="table table-bordered" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Название</th>
+              <th>Длинна ручки</th>
+              <th>Материал</th>
+              <th>Цвет<sup>2</sup></th>
+              <th>Цена за единицу руб.</th>
+              <th>Изменить</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for object in objects_list %}
+              <tr>
+                <td>{{ object.id }}</td>
+                <td>{{ object.name }}</td>
+                <td>{{ object.length|default:"нет" }}</td>
+                <td>{{ object.material }}</td>
+                <td>{{ object.color }}</td>
+                <td>{{ object.price_per_one }}</td>
+                <td><a href="{% url 'reference:ref_fitting_update' object.id %}" style="cursor: pointer;">Изменить</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+  </div>
+  <a href="" class="btn btn-success">Добавить</a>
+
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+{% endblock %}
+
+
