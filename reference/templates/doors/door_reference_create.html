@@ -12,10 +12,12 @@
       </div>
 
       <div class="card-body">
+        <form method="post">
           {% csrf_token %}
           {{ form.as_p }}
           <a class="btn btn-secondary" href="{% url 'reference:ref_doorsummary' %}">Назад</a>
           <button type="submit" class="btn btn-success float-right" style="margin-right: 20px;">Сохранить</button>
+        </form>
       </div>
 
     </div>
