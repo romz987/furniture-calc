@@ -4,15 +4,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-NULLABLE = {'blank': True, 'null': True}
-
 class User(AbstractUser):
     username = None
-    first_name = models.CharField(max_length=50, verbose_name='first name', **NULLABLE)
-    last_name = models.CharField(max_length=50, verbose_name='last name', **NULLABLE)
-    email = models.EmailField(unique=True, verbose_name='email')
-    phone = models.CharField(max_length=12, unique=True ,verbose_name='phone number', **NULLABLE)
-    telegram = models.CharField(max_length=150, unique=True, verbose_name='telegram username', **NULLABLE)
+    first_name = models.CharField(max_length=50, verbose_name='Имя', blank=True, null=True)
+    last_name = models.CharField(max_length=50, verbose_name='Фамилия', blank=True, null=True)
+    email = models.EmailField(unique=True, verbose_name='Email')
+    phone = models.CharField(max_length=12, unique=True ,verbose_name='Номер телефона', blank=True, null=True)
+    telegram = models.CharField(max_length=150, unique=True, verbose_name='Telegram', blank=True, null=True)
     is_active = models.BooleanField(default=True, verbose_name='active')
     
     USERNAME_FIELD = 'email'
