@@ -11,4 +11,5 @@ urlpatterns = [
     path('registration-success/', successful_register_view, name='user_registered'),
     path('password-recovery/', restore_password_view, name='password_recovery'),
     path('logout/', user_logout_view, name='user_logout'),
+    path('profile/', UserProfileView.as_view(), name='user_profile'),
 ]
