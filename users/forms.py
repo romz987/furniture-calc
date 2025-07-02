@@ -12,7 +12,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User 
-        fields = ('first_name', 'last_name', 'email', 'phone', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'email', 'password1', 'password2')
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -27,3 +27,13 @@ class UserLoginForm(forms.Form):
     email = forms.EmailField(label='email', widget=forms.EmailInput(attrs={"class": "form-control form-control-user", "placeholder": "Электронная почта"}))
     password = forms.CharField(label='пароль', widget=forms.PasswordInput(attrs={"class": "form-control form-control-user", "placeholder": "Пароль"}))
 
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'phone', 'telegram')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({"class": "form-control"})
