@@ -11,9 +11,9 @@ from wardrobe.models import Orders
 
 class WardrobeForm(forms.Form):
     # Рамеры
-    height = forms.CharField(label='высота мм', widget=forms.TextInput(attrs={"class": "form-control"}))
-    width = forms.CharField(label='ширина мм', widget=forms.TextInput(attrs={"class": "form-control"}))
-    depth = forms.CharField(label='глубина мм', widget=forms.TextInput(attrs={"class": "form-control"}))
+    height = forms.CharField(label='Высота мм', widget=forms.TextInput(attrs={"class": "form-control"}))
+    width = forms.CharField(label='Ширина мм', widget=forms.TextInput(attrs={"class": "form-control"}))
+    depth = forms.CharField(label='Глубина мм', widget=forms.TextInput(attrs={"class": "form-control"}))
     # Короб
     materials = forms.ModelChoiceField(queryset=MaterialType.objects.none(), label="Материал", widget=forms.Select(attrs={"class": "form-control"}))
     box_thicknesses = forms.ModelChoiceField(queryset=MaterialThickness.objects.none(), label="Толщина материала", widget=forms.Select(attrs={"class": "form-control"}))
