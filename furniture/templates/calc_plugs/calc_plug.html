@@ -1,0 +1,17 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+  <h1 class="h2 mb-2 text-gray-700">{{ title }}</h2>
+    <div class="card border-left-warning shadow h-100 mt-5">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <h3>Что здесь будет?</h3>
+        <br>
+        <p>Все довольно просто!</p>
+        <p>Здесь будет {{ in_text }}</p>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
