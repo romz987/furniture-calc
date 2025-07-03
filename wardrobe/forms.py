@@ -43,11 +43,10 @@ class WardrobeForm(forms.Form):
 
 
 class SaveOrderForm(forms.Form):
-    customer_name = forms.CharField(label='Имя заказчика', widget=forms.TextInput(attrs={"class": "form-control"}))
-    customer_surname = forms.CharField(label='Фамилия заказчика', widget=forms.TextInput(attrs={"class": "form-control"}))
-    phone = forms.CharField(label='Номер телефона', widget=forms.TextInput(attrs={"class": "form-control"}))
-    email = forms.EmailField(label='Электронная почта', widget=forms.TextInput(attrs={"class": "form-control"}))
-
+    customer_name = forms.CharField(label='Имя заказчика', widget=forms.TextInput(attrs={"class": "form-control user_names"}))
+    customer_surname = forms.CharField(label='Фамилия заказчика', widget=forms.TextInput(attrs={"class": "form-control user_names"}))
+    phone = forms.CharField(label='Номер телефона', widget=forms.TextInput(attrs={"class": "form-control user_phone"}))
+    email = forms.EmailField(label='Электронная почта', widget=forms.TextInput(attrs={"class": "form-control user_email"}))
 
 
 class UpdateOrderForm(forms.ModelForm):
