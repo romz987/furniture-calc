@@ -22,7 +22,7 @@ from .models import Orders
 
 
 class WardrobeView(LoginRequiredMixin, View):
-    template_name = 'wardrobe.html'
+    template_name = 'wardrobe_calculator.html'
     template_result = 'wardrobe_result.html'
     model_mtypes = MaterialType
     model_thicknesses = MaterialThickness
