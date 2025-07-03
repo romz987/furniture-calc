@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.views import View
 from django.shortcuts import render
@@ -10,8 +11,8 @@ class IndexView(LoginRequiredMixin, View):
 
     calc_urls = {
         'шкаф': 'wardrobe:calculator',
-        'кухня': 'wardrobe:calculator',
-        'комод': 'wardrobe:calculator'
+        'кухня': 'furniture:kitchen_calc_plug',
+        'комод': 'furniture:dresser_calc_plug'
     }
 
     def get(self, request):
@@ -24,3 +25,59 @@ class IndexView(LoginRequiredMixin, View):
             ) 
         context = {'objects_list': objects}
         return render(request, self.template, context)
+
+
+@login_required
+def wardrobe_man_view(request):
+    return render(request, 'manuals/wardrobe_manual.html')
+
+
+@login_required
+def dresser_man_view(request):
+    return render(request, 'manuals/dresser_manual.html')
+
+
+@login_required
+def kitchen_man_view(request):
+    return render(request, 'manuals/kitchen_manual.html')
+
+
+# дополнительно
+# заглушки для калькуляторов
+@login_required
+def dresser_calc_plug_view(request):
+    context = {
+        'title': 'Расчет стоимости комода',
+        'in_text': 'калькулятор для комода',
+    }
+    return render(request, 'calc_plugs/calc_plug.html', context=context)
+
+
+@login_required
+def kitchen_calc_plug_view(request):
+    context = {
+        'title': 'Расчет стоимости кухни',
+        'in_text': 'калькулятор для кухни',
+    }
+    return render(request, 'calc_plugs/calc_plug.html', context=context)
+
+
+# заглушки для заказов
+@login_required
+def dresser_orders_plug_view(request):
+    text = 'список заказов на комод'
+    context = {
+        'title': text.capitalize(),
+        'in_text': text,
+    }
+    return render(request, 'calc_plugs/calc_plug.html', context=context)
+
+
+@login_required
+def kitchen_orders_plug_view(request):
+    text = 'список заказов на кухни'
+    context = {
+        'title': text.capitalize(),
+        'in_text': text,
+    }
+    return render(request, 'calc_plugs/calc_plug.html', context=context)
