@@ -1,0 +1,25 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+{% block content %}
+<!-- Card with form -->
+<div class="container-fluid">
+
+  <h1 class="h2 mb-2 text-gray-800">Расчет стоимости шкафа</h2>
+
+  <div class="card border-left-primary shadow h-100 w-80 mx-auto mt-5">
+    <div class="card-header">
+      <i class="fa-solid fa-calculator"></i>
+    </div>
+    <div class="card-body">
+        <form method="post" class="wardrobe">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <!-- Submit buttons -->
+            <button type="submit" class="btn btn-primary float-right" value="calculate">Рассчитать</button>
+        </form>
+    </div>
+  </div>
+
+</div>
+<script src="{% static 'js/validation-main.js' %}"></script>
+{% endblock %}

@@ -1,15 +1,19 @@
 {% extends 'furniture/base.html' %}
 
 {% block content %}
-  <div class="card shadow mb-4 border-left-success">
-    <div class="card-header py-3">
-      <h2>Статус заказа</h2>
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h2 class="h2 mb-2 text-gray-700">Статус заказа</h2>
+
+    <div class="card shadow border-left-success mt-5">
+
+      <div class="card-header py-3"></div>
+
+      <div class="card-body">
+        <p style="font-size:2.4rem;">Заказ успешно сохранен!</p>
+      <div>
+
     </div>
-    <div class="card-body">
-      <p class="display-4"> Заказ успешно сохранен! </p>
-    <div>
-    <div class="card-footer">
-      <a class="btn btn-secondary" href="{% url 'furniture:index' %}">На главную</a>
-    </div>
-  </div>
+
+</div>
 {% endblock %}
