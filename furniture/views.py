@@ -6,9 +6,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from furniture.models import Furniture 
 
 
+# Главная страница
 class IndexView(LoginRequiredMixin, View):
     template = 'furniture/index.html'
-
     calc_urls = {
         'шкаф': 'wardrobe:calculator',
         'кухня': 'furniture:kitchen_calc_plug',
@@ -27,6 +27,7 @@ class IndexView(LoginRequiredMixin, View):
         return render(request, self.template, context)
 
 
+# Инструкция
 @login_required
 def wardrobe_man_view(request):
     return render(request, 'manuals/wardrobe_manual.html')
@@ -42,7 +43,7 @@ def kitchen_man_view(request):
     return render(request, 'manuals/kitchen_manual.html')
 
 
-# дополнительно
+# Дополнительно
 # заглушки для калькуляторов
 @login_required
 def dresser_calc_plug_view(request):
