@@ -2,15 +2,29 @@
 {% load static %}
 {% block content %}
 <div class="container-fluid">
-  <h1 class="h2 mb-2 text-gray-700">Мануал</h2>
-    <div class="card border-left-primary shadow h-100 mt-5">
-      <div class="card-header"></div>
+    <div class="card border-left-info shadow h-100 mt-5">
+      <div class="card-header text-info" style="font-size: 1.5rem;">
+        <i class="fa-solid fa-circle-question mr-3"></i>
+        Информация
+      </div>
       <div class="card-body">
-        <h3>Как происходит расчет стоимости комода?</h3>
         <br>
-        <p>Все довольно просто!</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+        <div class="manual ml-1" style="">
+          <h3 class="">А здесь тоже будет информация!</h3>
+          <p>Будет составлено подробное описание расчета стоимости кодома.</p>
+          <hr>
+          <h3 class="">Расчет стоимости комода</h3>
+          <p>
+            Как считается площадь?<br>
+            Как считается стоимость материала?<br>
+            Фурнитура и другие дополнения<br>
+            Итоговая цена<br>
+          </p>
+        <div>
 
+        <div class="text-center">
+          <img src="{% static 'img/maintance.png' %}" alt="Удаление" class="img-fluid my-4 w-25">
+        </div>
       </div>
     </div>
 </div>
