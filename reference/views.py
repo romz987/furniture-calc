@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -32,9 +32,11 @@ def boxsummary_delete_view(request, pk):
     record = get_object_or_404(BoxSummary, pk=pk)
     if request.method == 'POST':
         record.delete()
-        return redirect('furniture:index')
+        return redirect('reference:ref_boxsummary')
+    # Создадим ссылку
+    url = 'reference:ref_boxsummary'
     context = {
-        'title': 'Вы уверены, что хотите удалить запись?'
+        'url': reverse(url)
     }
     return render(request, 'confirm_delete.html', context=context)
 
@@ -61,7 +63,7 @@ class BoxSummaryCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # мой контекст
-        context['title'] = 'Изменить материал короба'
+        context['title'] = 'Добавить материал короба'
         return context
 
 
@@ -82,9 +84,11 @@ def doorsummary_delete_view(request, pk):
     record = get_object_or_404(DoorSummary, pk=pk)
     if request.method == 'POST':
         record.delete()
-        return redirect('furniture:index')
+        return redirect('reference:ref_doorsummary')
+    # Создадим ссылку
+    url = 'reference:ref_doorsummary'
     context = {
-        'title': 'Вы уверены, что хотите удалить запись?'
+        'url': reverse(url)
     }
     return render(request, 'confirm_delete.html', context=context)
 
@@ -105,7 +109,7 @@ class DoorSummaryUpdateView(LoginRequiredMixin, UpdateView):
 class DoorSummaryCreateView(LoginRequiredMixin, CreateView):
     model = DoorSummary 
     form_class = UpdateDoorSummaryForm
-    template_name = 'box/box_reference_create.html'
+    template_name = 'doors/door_reference_create.html'
     success_url = reverse_lazy('reference:ref_doorsummary')
 
     def get_context_data(self, **kwargs):
