@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -349,14 +349,10 @@ def orders_list_view(request):
 @login_required
 def order_delete_view(request, pk):
     order = get_object_or_404(Orders, pk=pk)
-    context = {
-        'title': 'Вы уверены, что хотите удалить заказ?',
-        'order': order
-    }
     if request.method == 'POST':
         order.delete()
         return redirect('wardrobe:show_wardrobe_orders')
-    return render(request, 'confirm_delete.html', context=context)
+    return render(request, 'delete_confirmation.html')
 
 
 @login_required
@@ -364,7 +360,12 @@ def save_order_success_view(request):
     # Проверим на переход по прямой ссылке
     if not request.session.get('save_order'):
         return redirect('wardrobe:calculator')
-    return render(request, 'wardrobe_save_order_success.html')
+    # Создадим ссылку для кнопки
+    url = 'wardrobe:show_wardrobe_orders'
+    context = {
+        'url':reverse(url) 
+    }
+    return render(request, 'wardrobe_save_order_success.html', context=context)
 
 
 @login_required
