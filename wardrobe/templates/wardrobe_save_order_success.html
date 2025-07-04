@@ -1,19 +1,31 @@
 {% extends 'furniture/base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container-fluid">
-    <!-- Page Heading -->
-    <h2 class="h2 mb-2 text-gray-700">Статус заказа</h2>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
 
-    <div class="card shadow border-left-success mt-5">
+      <div class="card shadow border-left-success">
+        <div class="card-header bg-light text-success text-center">
+          <h2 class="h4 mb-0">
+            <i class="fa-solid fa-circle-exclamation mr-2"></i>
+            Готово!
+          </h2>
+        </div>
 
-      <div class="card-header py-3"></div>
+        <div class="card-body text-center">
+          <img src="{% static 'img/success2.svg' %}" alt="Удаление" class="img-fluid my-4 w-50">
 
-      <div class="card-body">
-        <p style="font-size:2.4rem;">Заказ успешно сохранен!</p>
-      <div>
+          <p class="mb-4">Заказ успешно сохранен</p>
+          <a class="btn btn-secondary px-3 py-2" href="{{ url }}">К заказам</a>
+
+
+        </div>
+      </div>
 
     </div>
-
+  </div>
 </div>
 {% endblock %}
+
