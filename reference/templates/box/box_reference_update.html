@@ -5,19 +5,22 @@
 {% block content %}
 <div class="container-fluid">
 
-    <div class="card shadow mb-4">
+    <div class="card shadow border-left-warning mb-4">
 
       <div class="card-header py-3">
-        <h6 style="font-size: 1.5rem;">{{ title }}</h6>       
+        <h4 class="mb-0">
+        <i class="fa-solid fa-database mr-2"></i>
+          {{ title }}
+        </h4>       
       </div>
 
       <div class="card-body">
         <form method="post">
           {% csrf_token %}
           {{ form.as_p }}
-          <a class="btn btn-secondary" href="{% url 'reference:ref_boxsummary' %}">Назад</a>
-          <a class="btn btn-danger float-right" href="{% url 'reference:ref_boxsummary_delete' object.id %}">Удалить</a>
-          <button type="submit" class="btn btn-success float-right" style="margin-right: 20px;">Сохранить</button>
+          <a class="btn btn-secondary m-2" href="{% url 'reference:ref_boxsummary' %}">Назад</a>
+          <a class="btn btn-danger m-2 float-right" href="{% url 'reference:ref_boxsummary_delete' object.id %}">Удалить</a>
+          <button type="submit" class="btn btn-success m-2 float-right">Сохранить</button>
         </form>
       </div>
 
