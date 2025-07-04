@@ -1,7 +1,7 @@
-<div class='card shadow h-100 py-2'>
+<div class='card shadow h-100 py-2 mt-5'>
 
   <img class="card-img-top"
-      src="{{ object.image.url }}" width="300" height="320"
+      src="{{ object.image.url }}" height="300"
       alt="Card image cap">
 
   <div class='card-header'>
@@ -9,11 +9,7 @@
   </div>
 
   <div class='card-body'>
-    {{ object.description }}                              
-  </div>
-
-  <div class='card-footer text-center'>
-    <a href="{{ object.calculator_url }}" class="btn btn-outline-primary">Рассчитать</a>
+    <a href="{{ object.calculator_url }}" class="btn btn-outline-primary">Рассчитать</a>                 
   </div>
 
 </div>
