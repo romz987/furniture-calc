@@ -8,7 +8,7 @@ from furniture.models import Furniture
 
 # Главная страница
 class IndexView(LoginRequiredMixin, View):
-    template = 'furniture/index.html'
+    template_name = 'furniture/index.html'
     calc_urls = {
         'шкаф': 'wardrobe:calculator',
         'кухня': 'furniture:kitchen_calc_plug',
@@ -24,61 +24,68 @@ class IndexView(LoginRequiredMixin, View):
                 reverse(url_name)
             ) 
         context = {'objects_list': objects}
-        return render(request, self.template, context)
+        return render(request, self.template_name, context)
 
 
 # Инструкция
 @login_required
 def wardrobe_man_view(request):
-    return render(request, 'manuals/wardrobe_manual.html')
+    template_name = 'manuals/wardrobe_manual.html'
+    return render(request, template_name)
 
 
 @login_required
 def dresser_man_view(request):
-    return render(request, 'manuals/dresser_manual.html')
+    template_name = 'manuals/dresser_manual.html'
+    return render(request, template_name)
 
 
 @login_required
 def kitchen_man_view(request):
-    return render(request, 'manuals/kitchen_manual.html')
+    template_name = 'manuals/kitchen_manual.html'
+    return render(request, template_name)
 
 
 # Дополнительно
 # заглушки для калькуляторов
 @login_required
 def dresser_calc_plug_view(request):
+    template_name = 'calc_plugs/calc_plug.html'
     context = {
         'title': 'Расчет стоимости комода',
         'in_text': 'калькулятор для комода',
     }
-    return render(request, 'calc_plugs/calc_plug.html', context=context)
+    return render(request, template_name, context=context)
 
 
 @login_required
 def kitchen_calc_plug_view(request):
+    template_name = 'calc_plugs/calc_plug.html'
     context = {
         'title': 'Расчет стоимости кухни',
         'in_text': 'калькулятор для кухни',
     }
-    return render(request, 'calc_plugs/calc_plug.html', context=context)
+    return render(request, template_name, context=context)
 
 
 # заглушки для заказов
 @login_required
 def dresser_orders_plug_view(request):
-    text = 'список заказов на комод'
+    template_name = 'orders_plugs/order_plug.html'
+    text = 'Заказы на комод'
     context = {
         'title': text.capitalize(),
         'in_text': text,
     }
-    return render(request, 'calc_plugs/calc_plug.html', context=context)
+    return render(request, template_name, context=context)
 
 
 @login_required
 def kitchen_orders_plug_view(request):
-    text = 'список заказов на кухни'
+    template_name = 'orders_plugs/order_plug.html'
+    text = 'Заказы на кухни'
     context = {
         'title': text.capitalize(),
         'in_text': text,
     }
-    return render(request, 'calc_plugs/calc_plug.html', context=context)
+    return render(request, template_name, context=context)
