@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import View 
 from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from reference.models import (
     MaterialType,
     MaterialThickness,
@@ -258,6 +258,9 @@ class WardrobeOrderDetailView(LoginRequiredMixin, View):
 
     def get(self, request, pk):
         order_record = get_object_or_404(self.model_orders, pk=pk)
+        # Проверка владельца
+        if order_record.owner != request.user:
+            raise Http404
         customer_data = self.prepare_customer_data(order_record)
         order_size = self.prepare_order_size(order_record)
         order_info = self.prepare_order_info(order_record)
@@ -335,24 +338,41 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'wardrobe_order_update.html'
     success_url = reverse_lazy('wardrobe:show_wardrobe_orders')
 
+    def get_object(self):
+        order_record = super().get_object()
+        # Проверка пользователя
+        if order_record.owner != self.request.user:
+            raise Http404
+        return order_record
+
 
 @login_required
 def orders_list_view(request):
     objects_list = Orders.objects.filter(owner=request.user)
+    template_name = 'wardrobe_orders_list.html'
     context = {
         'title': 'Заказы шкафов',
         'objects_list': objects_list
     }
-    return render(request, 'wardrobe_orders_list.html', context=context)
+    return render(request, template_name, context=context)
 
 
 @login_required
 def order_delete_view(request, pk):
-    order = get_object_or_404(Orders, pk=pk)
+    order_record = get_object_or_404(Orders, pk=pk)
+    # Проверка пользователя
+    if order_record.owner != request.user:
+        raise Http404
     if request.method == 'POST':
-        order.delete()
+        order_record.delete()
         return redirect('wardrobe:show_wardrobe_orders')
-    return render(request, 'delete_confirmation.html')
+    # Страница подтверждения удаления
+    template_name = 'common/confirm_delete.html'
+    context = {
+        'title': 'Удаление заказа',
+        'message': 'Вы уверены, что хотите удалить заказ?'
+    }
+    return render(request, template_name, context=context)
 
 
 @login_required
@@ -362,10 +382,11 @@ def save_order_success_view(request):
         return redirect('wardrobe:calculator')
     # Создадим ссылку для кнопки
     url = 'wardrobe:show_wardrobe_orders'
+    template_name = 'wardrobe_save_order_success.html'
     context = {
         'url':reverse(url) 
     }
-    return render(request, 'wardrobe_save_order_success.html', context=context)
+    return render(request, template_name, context=context)
 
 
 @login_required
@@ -374,9 +395,10 @@ def combination_not_found_view(request):
     error = request.session.pop('combination_error', None)
     if not error:
         return redirect('wardrobe:calculator')
-    # результат
+    # Страница комбинация не найдена
+    template_name = 'common/combination_not_found.html'
     context = {
         'title': 'Ошибка комплекта',
         'error': error
     }
-    return render(request, 'combination_not_found.html', context=context)
+    return render(request, template_name, context=context)
