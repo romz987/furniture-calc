@@ -2,23 +2,77 @@
 {% load static %}
 {% block content %}
 <!-- Card with form -->
-<div class="container-fluid">
+<div class="container-sm">
+  <!--page header -->  
+  <h2 class="mb-2 text-gray-800">Расчет стоимости шкафа</h2>
 
-  <h1 class="h2 mb-2 text-gray-800">Расчет стоимости шкафа</h2>
-
-  <div class="card border-left-primary shadow h-100 w-80 mx-auto mt-5">
-    <div class="card-header text-primary">
-      <h2 class="h4 mb-0">
+  <!-- card -->
+  <div class="card border-primary shadow h-100 my-5">
+    <!-- card header -->
+    <div class="card-header text-light bg-primary">
+      <h4 class="mb-0">
         <i class="fa-solid fa-calculator mr-3"></i>
         Калькулятор
-      </h2>
+      </h4>
     </div>
-    <div class="card-body">
+
+    <!-- card body -->
+    <div class="card-body p-5">
         <form method="post" class="wardrobe">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <!-- Submit buttons -->
-            <button type="submit" class="btn btn-primary float-right" value="calculate">Рассчитать</button>
+        {% csrf_token %}
+
+          <!-- size blocks -->
+          <h3 class="text-dark font-weight-bold mb-5">Размеры</h3>
+          <div class="p-3 rounded bg-gray-100">
+            <!-- height -->
+            <label class="lead font-weight-bold" for="{{ form.height.id_for_label }}" >{{ form.height.label }}</label>
+            {{ form.height }}
+            <!-- width -->
+            <label class="lead font-weight-bold mt-4" for="{{ form.width.id_for_label }}" >{{ form.width.label }}</label>
+            {{ form.width }}
+            <!-- depth -->
+            <label class="lead font-weight-bold mt-4" for="{{ form.depth.id_for_label }}" >{{ form.depth.label }}</label>
+            {{ form.depth }}
+          </div>
+
+          <!-- box materials block -->
+          <h3 class="text-dark font-weight-bold my-5">Материал короба</h3>
+          <div class="p-4 rounded bg-gray-100">
+            <!-- material -->
+            <label class="lead font-weight-bold" for="{{ form.materials.id_for_label }}" >{{ form.materials.label }}</label>
+            {{ form.materials }}
+            <!-- width -->
+            <label class="lead font-weight-bold mt-4" for="{{ form.box_thicknesses.id_for_label }}" >{{ form.box_thicknesses.label }}</label>
+            {{ form.box_thicknesses }}
+            <!-- depth -->
+            <label class="lead font-weight-bold mt-4" for="{{ form.box_colors.id_for_label }}" >{{ form.box_colors.label }}</label>
+            {{ form.box_colors }}
+          </div>
+
+          <!-- door materials block -->
+          <h3 class="text-dark font-weight-bold my-5">Двери</h3>
+          <div class="p-4 rounded bg-gray-100">
+            <!-- doors type -->
+            <label class="lead font-weight-bold" for="{{ form.door_types.id_for_label }}" >{{ form.door_types.label }}</label>
+            {{ form.door_types }}
+            <!-- doors material thickness -->
+            <label class="lead font-weight-bold mt-4" for="{{ form.door_thicknesses.id_for_label }}" >{{ form.door_thicknesses.label }}</label>
+            {{ form.door_thicknesses }}
+            <!-- doors material color -->
+            <label class="lead font-weight-bold mt-4" for="{{ form.door_colors.id_for_label }}" >{{ form.door_colors.label }}</label>
+            {{ form.door_colors }}
+          </div>
+
+          <!-- furniture -->
+          <h3 class="text-dark font-weight-bold my-5">Двери</h3>
+          <div class="p-4 rounded bg-gray-100">
+            <!-- fitting -->
+            <label class="lead font-weight-bold" for="{{ form.handle_name.id_for_label }}" >{{ form.handle_name.label }}</label>
+            {{ form.handle_name }}
+          </div>
+
+          <!-- Submit buttons -->
+          <button type="submit" class="btn btn-primary float-right py-2 px-4 font-weight-bold mt-5" value="calculate">Рассчитать</button>
         </form>
     </div>
   </div>
