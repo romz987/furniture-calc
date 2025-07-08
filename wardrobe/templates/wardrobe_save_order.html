@@ -2,24 +2,36 @@
 {% load static %}
 {% block content %}
 <!-- Card with form -->
-<div class="container-fluid">
-  <h1 class="h2 mb-2 text-gray-700">Сохранение заказа</h2>
-
-    <div class="card border-left-warning shadow mb-4 mt-5">
-        <div class="card-header py-3">
-          <i class="fa-solid fa-floppy-disk"></i>
-        </div>
-        <div class="card-body">
-            <form method="post" class="saveorder">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <!-- Submit buttons -->
-                <button type="submit" class="btn btn-success mt-3" value="calculate">Сохранить</button>
-            </form>
-        </div>
+<div class="container-sm">
+  <!-- card -->
+  <div class="card shadow my-5">
+    <!-- card header -->
+    <div class="card-header bg-success text-light h5">
+      <i class="fa-regular fa-hard-drive"></i>
     </div>
+    <!-- card body -->
+    <div class="card-body">
+      <!-- message -->
+      <div class="text-center mt-5">
+        <h3 class="text-dark">{{ title }}</h3>
+      </div>
 
-</div>
+      <! --form -->
+      <form method="post" class="saveorder">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- buttons -->
+        <div class="d-flex justify-content-center mt-5">
+          <a href="javascript:window.history.back();" class="btn btn-outline-secondary btn-lg px-4 mr-2">Назад</a>
+          <button type="submit" class="btn btn-success btn-lg">Сохранить</button>
+        </div>
+      </form>
+      <!-- image -->
+      <div class="text-center mt-2">
+        <img src="{% static 'img/save-order-r.png' %}" alt="Что-то не найдено" class="img-fluid my-4 w-50">
+      </div>
 
-<script src="{% static 'js/validation-main.js' %}"></script>
+    </div>
+  </div>
+</div><script src="{% static 'js/validation-main.js' %}"></script>
 {% endblock %}

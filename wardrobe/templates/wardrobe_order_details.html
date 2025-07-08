@@ -1,159 +1,195 @@
 {% extends 'furniture/base.html' %}
 {% load static %}
 
-
 {% block content %}
-<div class="container-fluid">
+<div class="container-sm">
 
     <!-- Page Heading -->
-  <h1 class="h3 mb-2 text-gray-800">Заказ &#8470;{{ customer_data.order_id }}</h1>
+    <h2 class="mb-2 text-gray-700">Детали заказа</h2>
 
-    <div class="card shadow mb-4 mt-5">
-      <div class="card-header py-3" style="font-size: 1.5rem;">
-        <i class="fa-solid fa-user-tie mr-3"></i>
-        Данные заказчика   
+    <!-- Card User Info -->
+    <div class="card shadow my-5">
+      <! --Card Header -->
+      <div class="card-header h5 text-light bg-info">
+        <i class="fa-regular fa-circle-user"></i>
       </div>
-
+      <! --card body -->
       <div class="card-body">
-        <p>Имя: {{ customer_data.customer_name }}</p>
-        <p>Фамилия: {{ customer_data.customer_surname }}</p>
-        <p>Телефон: {{ customer_data.phone }}</p>
-        <p>Email: {{ customer_data.email }}</p>
-        <p>Дата заказа: {{ customer_data.order_date }}</p>
-      </div>
-    </div>
-
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-
-      <div class="card-header py-3" style="font-size: 1.5rem;">
-        <i class="fa-solid fa-file-lines mr-3"></i>
-        Смета       
-      </div>
-
-
-      <div class="card-body">
-
-        <div class="table-responsive">
-          <h6 style="font-size: 1.5rem; margin-bottom: 25px;">Размеры</h6>
-          <table class="table table-bordered" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th>Высота мм</th>
-                <th>Ширина мм</th>
-                <th>Глубина мм</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ order_size.height }}</td>
-                <td>{{ order_size.width }}</td>
-                <td>{{ order_size.depth }}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <br>
-          <hr>
-          <br>
-
-          <h6 style="font-size: 1.5rem; margin-bottom: 25px;">Короб</h6>
-          <table class="table table-bordered" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th>Материал</th>
-                <th>Толщина материала мм</th>
-                <th>Цвет материала</th>
-                <th>Стоимость за м<sup>2</sup> руб.</th>
-                <th>Площадь короба м<sup>2</sup></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ order_info.material_type}}</td>
-                <td>{{ order_info.box_material_thickness}}</td>
-                <td>{{ order_info.box_material_color}}</td>
-                <td>{{ order_info.box_price_per_sqm}}</td>
-                <td>{{ order_info.box_square}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <p style="font-size: 1.2 rem">Общая стоимсоть короба: {{ order_info.box_price }} руб. </p>
-
-          <br>
-          <hr>
-          <br>
-
-          <h6 style="font-size: 1.5rem; margin-bottom: 25px;">Двери</h6>
-          <table class="table table-bordered" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th>Тип дверей</th>
-                <th>Толщина материала мм</th>
-                <th>Цвет материала</th>
-                <th>Стоимость за м<sup>2</sup> руб.</th>
-                <th>Площадь дверей м<sup>2</sup></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ order_info.door_type }}</td>
-                <td>{{ order_info.door_material_thickness }}</td>
-                <td>{{ order_info.door_material_color }}</td>
-                <td>{{ order_info.door_price_per_sqm }}</td>
-                <td>{{ order_info.door_square }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <p style="font-size: 1.2 rem">Общая стоимсоть дверей: {{ order_info.door_price }} руб. </p>
-
-          <br>
-          <hr>
-          <br>
-
-          <h6 style="font-size: 1.5rem; margin-bottom: 25px;">Фурнитура</h6>
-          <table class="table table-bordered" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th>Название ручки</th>
-                <th>Цвет ручки</th>
-                <th>Материал</th>
-                <th>Межцентровое расстояние мм</th>
-                <th>Стоимость за единицу</th>
-                <th>Количество ручек</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ order_info.handle_name }}</td>
-                <td>{{ order_info.handle_color }}</td>
-                <td>{{ order_info.handle_material }}</td>
-                <td>{{ order_info.handle_length|default:'нет' }}</td>
-                <td>{{ order_info.handle_price_per_one }}</td>
-                <td>{{ order_info.handle_ammount }}</td>
-              </tr>
-            </tbody>
-          </table>
-        <p style="font-size: 1.2 rem">Общая стоимсоть ручек: {{ order_info.handle_price }} руб. </p>
-          
-          <br>
-          <br>
-
-          <h6 style="font-size: 1.6rem; margin-bottom: 25px;">Общая стоимость шкафа:</h6>
-          <p style="font-size: 3rem; margin-left: 50px;"> {{ order_info.total_price }} руб. </p>
-
+        <h3 class="text-dark">Заказчик</h3>
+        <!-- Customer info -->
+        <div class="px-4 pt-4 pb-2 m-3 bg-gray-100 rounded lead">
+          <p>
+            Имя: {{ customer_data.customer_name }}<br>
+            Фамилия: {{ customer_data.customer_surname }}<br>
+            Телефон: {{ customer_data.phone }}<br>
+            Email: {{ customer_data.email }}<br>
+            Дата заказа: {{ customer_data.order_date }}<br><br>
+            {% if user.is_superuser %}
+              Принял заказ: {{ customer_data.owner.first_name }} {{ customer_data.owner.last_name }}
+            {% endif %}
+          </p>
         </div>
       </div>
-
-      <div class="card-footer">
-        <a class="btn btn-secondary" href="{% url 'wardrobe:show_wardrobe_orders' %}">Назад</a>
-        <a class="btn btn-danger float-right" href="{% url 'wardrobe:order_delete' customer_data.order_id %}">Удалить</a>
-        <a class="btn btn-success float-right" style="margin-right: 20px;" href="{% url 'wardrobe:wardrobe_order_update' customer_data.order_id %}">Изменить</a>
-
-      </div>
-
+       <!-- buttons -->
+      <div class="d-flex flex-wrap justify-content-between px-4 mb-4">
+          {% csrf_token %}
+          <a href="javascript:window.history.back();" class="btn btn-outline-secondary btn-lg px-4 mr-2">Назад</a>
+          <! --dropdown button -->
+          <div class="dropdown">
+            <button class="btn btn-info btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+              Действия
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item lead" href="{% url 'wardrobe:wardrobe_order_update' customer_data.order_id %}">Изменить</a>
+              <a class="dropdown-item lead" href="#">Деактивировать</a>
+              {% if user.is_superuser %}
+                <a class="dropdown-item lead" href="{% url 'wardrobe:order_delete' customer_data.order_id %}">Удалить</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div
     </div>
 
+
+    <!-- Card Order Summary -->
+    <div class="card shadow my-5">
+      <! --Card Header -->
+      <div class="card-header h5">
+        <i class="fa-regular fa-rectangle-list"></i>
+      </div>
+      <! --card body -->
+      <div class="card-body">
+
+        <h3 class="text-dark">Смета</h3>
+
+        <!-- wardrobe size -->
+        <h4 class="responsive-text px-2 mb-3 mt-4">Размеры</h4>
+        <div class="px-4">
+          <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+              <thead class="bg-gray-200">
+                <tr>
+                  <th>Высота мм</th>
+                  <th>Ширина мм</th>
+                  <th>Глубина мм</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ order_size.height }}</td>
+                  <td>{{ order_size.width }}</td>
+                  <td>{{ order_size.depth }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- wardrobe box -->
+        <h4 class="px-2 mb-3 mt-4">Короб</h4>        
+        <div class="px-4">
+          <div class="table-responsive">
+            <!-- table -->
+            <table class="table table-bordered" width="100%" cellspacing="0">
+              <thead class="bg-gray-200">
+                <tr>
+                  <th>Материал</th>
+                  <th>Толщина материала мм</th>
+                  <th>Цвет материала</th>
+                  <th>Стоимость за м<sup>2</sup> руб.</th>
+                  <th>Площадь короба м<sup>2</sup></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ order_info.material_type }}</td>
+                  <td>{{ order_info.box_material_thickness }}</td>
+                  <td>{{ order_info.box_material_color }}</td>
+                  <td>{{ order_info.box_price_per_sqm }}</td>
+                  <td>{{ order_size.box_square }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 class="float-right"><i>Стоимость короба: {{ order_info.box_price }} руб.</i></h4>
+        </div>
+
+
+        <!-- wardrobe doors -->
+        <h4 class="px-2 mb-3 mt-5">Двери</h4>    
+        <div class="px-4">
+          <div class="table-responsive">
+            <!-- table -->
+            <table class="table table-bordered" width="100%" cellspacing="0">
+              <thead class="bg-gray-200">
+                <tr>
+                  <th>Тип дверей</th>
+                  <th>Толщина материала мм</th>
+                  <th>Цвет материала</th>
+                  <th>Стоимость за м<sup>2</sup> руб.</th>
+                  <th>Площадь дверей м<sup>2</sup></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ order_info.door_type }}</td>
+                  <td>{{ order_info.door_material_thickness }}</td>
+                  <td>{{ order_info.door_material_color }}</td>
+                  <td>{{ order_info.door_price_per_sqm }}</td>
+                  <td>{{ order_size.door_square }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 class="float-right"><i>Стоимость дверей: {{ order_info.door_price }} руб.</i></h4>
+        </div>
+
+
+        <!-- furniture -->
+        <h4 class="px-2 mb-3 mt-5">Фурнитура</h4>    
+        <div class="px-4 mb-5">
+          <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+              <thead class="bg-gray-200">
+                <tr>
+                  <th>Название</th>
+                  <th>Цвет</th>
+                  <th>Материал</th>
+                  <th>Межцент. расстояние мм</th>
+                  <th>Цена за единицу</th>
+                  <th>Количество</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ order_info.handle_name }}</td>
+                  <td>{{ order_info.handle_color }}</td>
+                  <td>{{ order_info.handle_material }}</td>
+                  <td>{{ order_info.handle_length|default:"нет" }}</td>
+                  <td>{{ order_info.handle_price_per_one }}</td>
+                  <td>{{ order_info.handle_ammount }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4 class="float-right"><i>Стоимость ручек: {{ order_info.handle_price }} руб.</i></h4>
+        </div>
+
+
+        <!-- total price -->
+        <br>
+        <hr class="mt-5">
+        <div class="d-flex flex-column pl-5">
+          <h2 class="text-dark font-weight-bold pr-5">Общая стоимость заказа:</h2>
+          <div class="pr-5">
+            <h2 class="text-dark display-3">{{ order_info.total_price }} руб.</h2>
+          </div>
+        </div>
+
+      </div>
+    </div>
 </div>
+
 {% endblock %}
 

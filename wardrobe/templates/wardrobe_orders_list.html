@@ -8,9 +8,11 @@
   <!-- Page Heading -->
   <h1 class="h3 mb-2 text-gray-800">Заказы шкафов</h1>
 
-  <!-- DataTales Example -->
+  <!-- DataTales -->
   <div class="card shadow border-primary mb-4 mt-5">
-    <div class="card-header py-3 bg-primary"></div>
+    <div class="card-header text-white py-3 bg-primary">
+      <i class="fa-solid fa-money-check-dollar"></i>
+    </div>
     <div class="card-body">
 
       <div class="table-responsive">
@@ -18,11 +20,14 @@
           <thead>
             <tr>
               <th>Номер заказа</th>
-              <th>Дата заказа</th>
               <th>Имя заказчика</th>
               <th>Стоимость заказа</th>
               <th>Телефон</th>
               <th>Email</th>
+              {% if user.is_superuser %}
+                <th>Сотрудник</th>
+              {% endif %}
+              <th>Дата заказа</th>
               <th>Подробнее</th>
             </tr>
           </thead>
@@ -30,11 +35,14 @@
             {% for object in objects_list %}
               <tr>
                 <td>{{ object.id }}</td>
-                <td>{{ object.order_date }}</td>
                 <td>{{ object.customer_name }} {{ object.customer_surname }}</td>
                 <td>{{ object.total_price }} руб</td>
                 <td>{{ object.phone }}</td>
                 <td>{{ object.email }}</td>
+                {% if user.is_superuser %}
+                  <td>{{ object.owner.first_name }} {{ object.owner.last_name }}</td>
+                {% endif %}
+                <td>{{ object.order_date }}</td>
                 <td><a href="{% url 'wardrobe:show_wardrobe_order_detail' object.id %}" style="cursor: pointer;">Подробности</a></td>
               </tr>
             {% endfor %}
