@@ -53,8 +53,8 @@ class BoxSummary(models.Model):
     price_per_sqm = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='цена за квадратный метр') 
 
     class Meta:
-        verbose_name = 'box materials summary'
-        verbose_name_plural = 'box materials summary'
+        verbose_name = 'Материал короба'
+        verbose_name_plural = 'Материалы короба'
         unique_together = ('material_type', 'material_thickness', 'material_color')
 
 
@@ -66,8 +66,8 @@ class DoorSummary(models.Model):
     price_per_sqm = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='цена за квадратный метр') 
 
     class Meta:
-        verbose_name = 'door summary'
-        verbose_name_plural = 'door summary'
+        verbose_name = 'Материал дверки'
+        verbose_name_plural = 'Материалы дверок'
         unique_together = ('material_type', 'material_thickness', 'material_color', 'door_type')
 
 
