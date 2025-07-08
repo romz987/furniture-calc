@@ -9,8 +9,11 @@
   <h1 class="h3 mb-2 text-gray-800">{{ title }}</h1>
 
   <!-- DataTales Example -->
-  <div class="card shadow mb-4">
-    <div class="card-header py-3"></div>
+  <div class="card shadow border-primary mb-4 mt-5">
+    <div class="card-header bg-primary text-white py-3">
+      <i class="fa-solid fa-database"></i>
+    </div>    
+
     <div class="card-body">
 
       <div class="table-responsive">
@@ -45,7 +48,7 @@
 
     </div>
   </div>
-  <a href="" class="btn btn-success">Добавить</a>
+  <a href="{% url 'reference:ref_fitting_create' %}" class="btn btn-success">Добавить</a>
 
 </div>
 {% endblock %}

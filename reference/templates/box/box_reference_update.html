@@ -3,30 +3,28 @@
 
 
 {% block content %}
-<div class="container-fluid">
+<div class="container-sm">
+    <! --Card -->
+    <div class="card shadow my-5">
 
-    <div class="card shadow border-left-warning mb-4">
-
-      <div class="card-header py-3">
-        <h4 class="mb-0">
-        <i class="fa-solid fa-database mr-2"></i>
-          {{ title }}
-        </h4>       
+      <div class="card-header bg-success text-light py-3">
+        <i class="fa-solid fa-database"></i>
       </div>
 
       <div class="card-body">
-        <form method="post">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <a class="btn btn-secondary m-2" href="{% url 'reference:ref_boxsummary' %}">Назад</a>
-          <a class="btn btn-danger m-2 float-right" href="{% url 'reference:ref_boxsummary_delete' object.id %}">Удалить</a>
-          <button type="submit" class="btn btn-success m-2 float-right">Сохранить</button>
-        </form>
+        <h3 class="text-dark p-3">{{ title }}</h3>
+        <! --Form -->
+        <div class="px-4 pb-2 m-3 rounded lead">
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <a class="btn btn-outline-secondary btn-lg mt-4" href="javascript:window.history.back();">Назад</a>
+            <button type="submit" class="btn btn-success btn-lg float-right mt-4 ml-3">Сохранить</button>
+            <a class="btn btn-danger btn-lg float-right mt-4" href="{% url 'reference:ref_boxsummary_delete' object.id %}">Удалить</a>
+          </form>
+        </div>
       </div>
-
-
     </div>
-
 </div>
 {% endblock %}
 
