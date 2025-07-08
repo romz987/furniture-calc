@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,6 +7,11 @@ from reference.models import (
     BoxSummary,
     DoorSummary,
     DoorHandle,
+    # Свойства
+    MaterialType,
+    MaterialThickness,
+    MaterialColor,
+    DoorType,
 )
 from reference.forms import (
     UpdateBoxSummaryForm,
@@ -33,12 +38,13 @@ def boxsummary_delete_view(request, pk):
     if request.method == 'POST':
         record.delete()
         return redirect('reference:ref_boxsummary')
-    # Создадим ссылку
-    url = 'reference:ref_boxsummary'
+    # Страница подтвержения удаления
+    template_name = 'common/confirm_delete.html'
     context = {
-        'url': reverse(url)
+        'title': 'Удаление',
+        'message': 'Вы уверены, что хотите удалить запись?'
     }
-    return render(request, 'confirm_delete.html', context=context)
+    return render(request, template_name, context=context)
 
 
 class BoxSummaryUpdateView(LoginRequiredMixin, UpdateView):
@@ -69,6 +75,7 @@ class BoxSummaryCreateView(LoginRequiredMixin, CreateView):
 
 
 # Материалы дверей
+@login_required
 def doorsummary_show_view(request):
     objects_list = DoorSummary.objects.all()
     context = {
@@ -85,12 +92,13 @@ def doorsummary_delete_view(request, pk):
     if request.method == 'POST':
         record.delete()
         return redirect('reference:ref_doorsummary')
-    # Создадим ссылку
-    url = 'reference:ref_doorsummary'
+    # Страница подтвержения удаления
+    template_name = 'common/confirm_delete.html'
     context = {
-        'url': reverse(url)
+        'title': 'Удаление',
+        'message': 'Вы уверены, что хотите удалить запись?'
     }
-    return render(request, 'confirm_delete.html', context=context)
+    return render(request, template_name, context=context)
 
 
 class DoorSummaryUpdateView(LoginRequiredMixin, UpdateView):
@@ -136,11 +144,14 @@ def handles_delete_view(request, pk):
     record = get_object_or_404(DoorHandle, pk=pk)
     if request.method == 'POST':
         record.delete()
-        return redirect('furniture:index')
+        return redirect('reference:ref_fitting')
+    # Страница подтвержения удаления
+    template_name = 'common/confirm_delete.html'
     context = {
-        'title': 'Вы уверены, что хотите удалить запись?'
+        'title': 'Удаление',
+        'message': 'Вы уверены, что хотите удалить запись?'
     }
-    return render(request, 'confirm_delete.html', context=context)
+    return render(request, template_name, context=context)
 
 
 class HandlesUpdateView(LoginRequiredMixin, UpdateView):
@@ -152,7 +163,7 @@ class HandlesUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # мой контекст
-        context['title'] = 'Изменить дверную ручку'
+        context['title'] = 'Изменить мебельную ручку'
         return context
 
 
@@ -165,5 +176,23 @@ class HandlesCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # мой контекст
-        context['title'] = 'Добавить дверную ручку'
+        context['title'] = 'Добавить мебельную ручку'
         return context
+
+
+
+# Свойства
+@login_required
+def properties_show_view(request):
+    material_types = MaterialType.objects.all().order_by('id')
+    material_thick = MaterialThickness.objects.all().order_by('id')
+    material_colors = MaterialColor.objects.all().order_by('id')
+    doors = DoorType.objects.all().order_by('id')
+    context = {
+        'title': 'Свойства',
+        'material_types': material_types,
+        'material_thick': material_thick,
+        'material_colors': material_colors,    
+        'doors': doors,
+    }
+    return render(request, 'properties/pr_reference.html', context=context)
