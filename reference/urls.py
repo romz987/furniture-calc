@@ -13,6 +13,7 @@ from reference.views import (
     HandlesUpdateView,
     handles_delete_view,
     HandlesCreateView,
+    properties_show_view
 )
 
 app_name = ReferenceConfig.name
@@ -35,4 +36,5 @@ urlpatterns = [
     path('fitting-update/<int:pk>', HandlesUpdateView.as_view(), name="ref_fitting_update"),
     path('fitting-delete/<int:pk>', handles_delete_view, name="ref_fitting_delete"),
     # properties
+    path('properties/', properties_show_view, name="ref_properties"),
 ]
