@@ -13,5 +13,5 @@ urlpatterns = [
     path('orders/', orders_list_view, name='show_wardrobe_orders'),
     path('order_detail/<int:pk>/', WardrobeOrderDetailView.as_view(), name='show_wardrobe_order_detail'), 
     path('order_delete/<int:pk>/', order_delete_view, name='order_delete'),
-    path('order_update/<int:pk>/', OrderUpdateView.as_view(), name='wardrobe_order_update')
+    path('order_update/<int:pk>/', OrderUpdateView.as_view(), name='wardrobe_order_update'),
 ]
