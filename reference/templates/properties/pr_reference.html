@@ -1,0 +1,108 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">{{ title }}</h1>
+
+
+  <!-- Material Types -->
+  <div class="card shadow mb-4 my-5">
+    <!-- Header -->
+    <div class="card-header bg-info h6 text-white">
+      <i class="fa-solid fa-database"></i>
+    </div>
+
+    <div class="card-body">
+
+
+      <h3 class="text-dark p-3 mb-3">Виды материалов</h3>
+      <!-- DataTable -->
+      <div class="table-responsive px-4">
+      <table class="table table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Название</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for material in material_types %}
+            <tr>
+              <td>{{ material.id }}</td>
+              <td>{{ material.name }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+        
+
+      <h3 class="text-dark p-3 mb-3">Толщины материалов</h3>
+      <!-- DataTable -->
+      <div class="table-responsive px-4">
+      <table class="table table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Толщина</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for thick in material_thick %}
+            <tr>
+              <td>{{ thick.id }}</td>
+              <td>{{ thick.thickness }} мм.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="text-dark p-3 mb-3">Цвета материалов</h3>
+      <!-- DataTable -->
+      <div class="table-responsive px-4">
+      <table class="table table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Название цвета</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for color in material_colors %}
+            <tr>
+              <td>{{ color.id }}</td>
+              <td>{{ color.name }} мм.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="text-dark p-3 mb-3">Типы дверей</h3>
+      <!-- DataTable -->
+      <div class="table-responsive px-4">
+      <table class="table table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Тип двери</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for door in doors %}
+            <tr>
+              <td>{{ door.id }}</td>
+              <td>{{ door.name }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

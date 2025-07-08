@@ -8,9 +8,10 @@
   <!-- Page Heading -->
   <h1 class="h3 mb-2 text-gray-800">{{ title }}</h1>
 
-  <!-- DataTales Example -->
+  <!-- Card -->
   <div class="card shadow border-primary mb-4 mt-5">
-    <div class="card-header bg-primary text-white py-3">
+    <! --Header -->
+    <div class="card-header bg-primary h6 text-white">
       <i class="fa-solid fa-database"></i>
     </div>
     <div class="card-body">
@@ -51,12 +52,3 @@
 
 </div>
 {% endblock %}
-
-
-{% block scripts %}
-{{ block.super }}
-<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
-{% endblock %}
-
