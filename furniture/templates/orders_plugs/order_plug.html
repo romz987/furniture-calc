@@ -1,0 +1,34 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-sm">
+    <!--page header -->  
+    <h2 class="mb-2 text-gray-800">{{ title }}</h2>
+
+    <div class="card shadow h-100 my-5">
+      <!-- card header -->
+      <div class="card-header text-light bg-gray-500">
+        <h4 class="mb-0">
+          <i class="fa-solid fa-money-check-dollar"></i>
+        </h4>
+      </div>
+
+      <div class="card-body text-center">
+        <!-- header image -->
+        <div class="text-center mx-4">
+          <img src="{% static 'img/wait-calc-r.png' %}" alt="В ожидании" class="img-fluid my-4 rounded">
+        </div>
+        <br>
+
+        <!-- main header -->
+        <h1 class="text-dark ml-4 font-weight-bold">Что-то здесь обязательно будет!</h1>
+
+        <!-- text wrapper -->
+        <div class="my-4">
+          <p class="lead">Заказов будет просто уйма</p>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
