@@ -1,15 +1,33 @@
 {% extends 'furniture/base.html' %}
 {% load static %}
 {% block content %}
-<div class="container-fluid">
-  <h1 class="h2 mb-2 text-gray-700">{{ title }}</h2>
-    <div class="card border-left-warning shadow h-100 mt-5">
-      <div class="card-header"></div>
-      <div class="card-body">
-        <h3>Что здесь будет?</h3>
+<div class="container-sm">
+    <!--page header -->  
+    <h2 class="mb-2 text-gray-800">{{ title }}</h2>
+
+    <div class="card shadow h-100 my-5">
+      <!-- card header -->
+      <div class="card-header text-light bg-gray-500">
+        <h4 class="mb-0">
+          <i class="fa-solid fa-calculator mr-3"></i>
+          Калькулятор
+        </h4>
+      </div>
+
+      <div class="card-body text-center">
+        <!-- header image -->
+        <div class="text-center mx-4">
+          <img src="{% static 'img/wait-calc-r.png' %}" alt="В ожидании" class="img-fluid my-4 rounded">
+        </div>
         <br>
-        <p>Все довольно просто!</p>
-        <p>Здесь будет {{ in_text }}</p>
+
+        <!-- main header -->
+        <h1 class="text-dark ml-4 font-weight-bold">Что-то здесь обязательно будет!</h1>
+
+        <!-- text wrapper -->
+        <div class="my-4">
+          <p class="lead">Мы обязательно придумаем, как что считать</p>
+        </div>
       </div>
     </div>
 </div>
