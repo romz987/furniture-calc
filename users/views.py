@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, UpdateView
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm
@@ -67,3 +67,31 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+# Админ
+@login_required
+def manage_users_view(request):
+    # Проверка привилегий
+    if not request.user.is_superuser:
+        raise Http404
+    # Возврашаем страницу
+    template_name = 'admin/manage_users.html'
+    objects_list = User.objects.filter(is_superuser=False)
+    context = {
+        'title': 'Управление пользователями',
+        'objects_list': objects_list,
+    }
+    return render(request, template_name, context=context)
+
+
+@login_required
+def toggle_user_active_view(request, pk):
+    # Проверка привилегий
+    if not request.user.is_superuser:
+        raise Http404
+    # Меняем активность
+    user = get_object_or_404(User, pk=pk)
+    user.is_active = not user.is_active
+    user.save()
+    return redirect('users:manage_users')
