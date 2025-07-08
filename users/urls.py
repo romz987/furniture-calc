@@ -12,4 +12,7 @@ urlpatterns = [
     path('password-recovery/', restore_password_view, name='password_recovery'),
     path('logout/', user_logout_view, name='user_logout'),
     path('profile/', UserProfileView.as_view(), name='user_profile'),
+    # admin
+    path('admin/manage-users/', manage_users_view, name='manage_users'),
+    path('admin/togggle-activity/<int:pk>/', toggle_user_active_view, name="toggle_activity")
 ]
