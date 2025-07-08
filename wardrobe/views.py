@@ -259,7 +259,7 @@ class WardrobeOrderDetailView(LoginRequiredMixin, View):
     def get(self, request, pk):
         order_record = get_object_or_404(self.model_orders, pk=pk)
         # Проверка владельца
-        if order_record.owner != request.user:
+        if order_record.owner != request.user and not request.user.is_superuser:
             raise Http404
         customer_data = self.prepare_customer_data(order_record)
         order_size = self.prepare_order_size(order_record)
@@ -279,6 +279,7 @@ class WardrobeOrderDetailView(LoginRequiredMixin, View):
             'phone': order_record.phone,
             'email': order_record.email,
             'order_date': order_record.order_date,
+            'owner': order_record.owner,
         }
 
     def prepare_order_size(self, order_record):
@@ -341,14 +342,17 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         order_record = super().get_object()
         # Проверка пользователя
-        if order_record.owner != self.request.user:
+        if order_record.owner != self.request.user and not self.request.user.is_superuser:
             raise Http404
         return order_record
 
 
 @login_required
 def orders_list_view(request):
-    objects_list = Orders.objects.filter(owner=request.user)
+    if request.user.is_superuser:
+        objects_list = Orders.objects.all()
+    else:
+        objects_list = Orders.objects.filter(owner=request.user)
     template_name = 'wardrobe_orders_list.html'
     context = {
         'title': 'Заказы шкафов',
@@ -360,8 +364,9 @@ def orders_list_view(request):
 @login_required
 def order_delete_view(request, pk):
     order_record = get_object_or_404(Orders, pk=pk)
+    order_number = order_record.id
     # Проверка пользователя
-    if order_record.owner != request.user:
+    if order_record.owner != request.user and not request.user.is_superuser:
         raise Http404
     if request.method == 'POST':
         order_record.delete()
@@ -369,8 +374,8 @@ def order_delete_view(request, pk):
     # Страница подтверждения удаления
     template_name = 'common/confirm_delete.html'
     context = {
-        'title': 'Удаление заказа',
-        'message': 'Вы уверены, что хотите удалить заказ?'
+        'title': 'Вы уверены, что хотите удалить заказ?',
+        'message': f'Удалить заказ номер {order_number}'
     }
     return render(request, template_name, context=context)
 
@@ -398,7 +403,6 @@ def combination_not_found_view(request):
     # Страница комбинация не найдена
     template_name = 'common/combination_not_found.html'
     context = {
-        'title': 'Ошибка комплекта',
         'error': error
     }
     return render(request, template_name, context=context)
