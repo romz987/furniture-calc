@@ -2,29 +2,31 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10">
-
-      <div class="card shadow border-left-danger">
-        <div class="card-header bg-light text-danger text-center">
-          <h2 class="h4 mb-0">
-            <i class="fa-solid fa-circle-exclamation mr-2"></i>
-            {{ title }}
-          </h2>
-        </div>
-
-        <div class="card-body text-center">
-          <img src="{% static 'img/delete2.jpg' %}" alt="Удаление" class="img-fluid my-4 w-50">
-
-          <p class="mb-4">{{ message }}</p>
-
-          <form method="post" class="d-flex justify-content-center gap-3 flex-wrap">
-            {% csrf_token %}
-            <a href="javascript:window.history.back();" class="btn btn-secondary px-4 m-2">Назад</a>
-            <button type="submit" class="btn btn-danger px-4 m-2">Удалить</button>
-          </form>
-        </div>
+<div class="container-sm">
+  <!-- card -->
+  <div class="card shadow">
+    <!-- card header -->
+    <div class="card-header bg-danger text-light h5">
+      <i class="fa-solid fa-circle-exclamation mr-2"></i>
+    </div>
+    <!-- card body -->
+    <div class="card-body d-flex flex-column align-items-center">
+      <!-- message -->
+      <div class="text-center mt-5">
+        <h3 class="text-dark">{{ title }}</h3>
+        <p class="py-3">{{ message }}</p>
+      </div>
+      <!-- buttons -->
+      <div class="mt-2">
+        <form method="post">
+          {% csrf_token %}
+          <a href="javascript:window.history.back();" class="btn btn-outline-secondary btn-lg px-4 mr-2">Назад</a>
+          <button type="submit" class="btn btn-danger btn-lg">Удалить</button>
+        </form>
+      </div>
+      <!-- image -->
+      <div class="text-center mt-2">
+        <img src="{% static 'img/delete-r.png' %}" alt="Что-то не найдено" class="img-fluid my-4 w-50">
       </div>
 
     </div>
