@@ -40,6 +40,8 @@ class Orders(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='сотрудник')
     # дата 
     order_date = models.DateTimeField(verbose_name='дата заказа', null=True, blank=True)
+    # активность
+    is_active = models.BooleanField(default=True, verbose_name='active')
     
     class Meta:
         verbose_name = 'заказ'
