@@ -102,7 +102,7 @@
                         <a class="collapse-item" href="{% url 'reference:ref_fitting' %}">Мебельные ручки</a>
                         <hr>
                         <h6 class="collapse-header">Свойства:</h6>
-                        <a class="collapse-item" href="">Свойства</a>
+                        <a class="collapse-item" href="{% url 'reference:ref_properties' %}">Свойства</a>
                     </div>
                 </div>
             </li>
@@ -126,6 +126,34 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
+            {% if user.is_superuser %}
+            <!-- Nav Item - Admin -->
+            <div class="sidebar-heading">Админ</div>
+            <!--Deactivated orders -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdmin"
+                    aria-expanded="true" aria-controls="collapseAdmin">
+                    <i class="fa-regular fa-circle-xmark"></i>
+                    <span><b>Неактивные заказы</b></span>
+                </a>
+                <div id="collapseAdmin" class="collapse" aria-labelledby="headingAdmin"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                      <a class="collapse-item" href="{% url 'wardrobe:wardrobe_deactivated' %}">Шкафы</a>
+                      <a class="collapse-item" href="{% url 'furniture:dresser_deactivated' %}">Комоды</a>
+                      <a class="collapse-item" href="{% url 'furniture:kitchen_deactivated' %}">Кухни</a>
+                    </div>
+                </div>
+            </li>
+
+            <!--User Control -->
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'users:manage_users' %}">
+                    <i class="fa-regular fa-circle-user"></i>
+                    <span><b>Пользователи</b></span></a>
+            </li>
+            {% endif %}
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -209,24 +237,32 @@
     </div>
 
 
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<!-- Bootstrap core JavaScript-->
-<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
-<!-- Custom scripts for all pages-->
-<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+  <!-- Page level plugins -->
+  <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
 
-<!-- Page level plugins -->
-<script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+  <!-- DataTable -->
+  <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
 
-<!-- Page level custom scripts -->
-<!-- <script src="{% static 'js/demo/chart-area-demo.js' %}"></script> -->
-<!-- <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script> -->
+  <script>
+      $(document).ready(function() {
+          $('#dataTable').DataTable({
+              language: {
+                  url: "https://cdn.datatables.net/plug-ins/1.13.4/i18n/ru.json"
+              }
+          });
+      });
+  </script>
 
-{% block scripts %}{% endblock %}
 </body>
 </html>
