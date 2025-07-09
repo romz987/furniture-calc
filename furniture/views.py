@@ -9,6 +9,7 @@ from furniture.models import Furniture
 # Главная страница
 class IndexView(LoginRequiredMixin, View):
     template_name = 'furniture/index.html'
+    model = Furniture
     calc_urls = {
         'шкаф': 'wardrobe:calculator',
         'кухня': 'furniture:kitchen_calc_plug',
@@ -16,7 +17,7 @@ class IndexView(LoginRequiredMixin, View):
     }
 
     def get(self, request):
-        objects = Furniture.objects.all()
+        objects = self.model.objects.all()
         # Добавлеяем url в каждый объект из базы
         for obj in objects:
             url_name = self.calc_urls[str(obj.name).lower()]
