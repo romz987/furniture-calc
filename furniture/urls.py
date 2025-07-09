@@ -10,6 +10,9 @@ from furniture.views import (
     kitchen_calc_plug_view,
     dresser_orders_plug_view,
     kitchen_orders_plug_view,
+    # заглушки для отмененных
+    dresser_deactivated_plug_view,
+    kitchen_deactivated_plug_view,
 )
 
 app_name = FurnitureConfig.name
@@ -27,4 +30,7 @@ urlpatterns = [
     # заглушки заказы
     path('dresser-orders-plug/', dresser_orders_plug_view, name='dresser_orders_plug'),
     path('kitchen-orders-plug/', kitchen_orders_plug_view, name='kitchen_orders_plug'),
+    # заглушки отмененные заказы
+    path('management/dresser-deactivated/', dresser_deactivated_plug_view, name='dresser_deactivated'),
+    path('management/kitchen-deactivated/', kitchen_deactivated_plug_view, name='kitchen_deactivated'),
 ]
