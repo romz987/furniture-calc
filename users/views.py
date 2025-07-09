@@ -3,9 +3,9 @@ from django.contrib import messages
 from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import UpdateView
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm
 from users.models import User
 
@@ -15,7 +15,7 @@ def user_register_view(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
+            form.save()
             return HttpResponseRedirect(reverse('users:user_registered'))
         else:
             messages.error(request, 'Проверьте правильность введённых данных.')
@@ -31,16 +31,19 @@ def user_login_view(request):
         form = UserLoginForm(request.POST)
         if form.is_valid():
             cleaned_data = form.cleaned_data
-            user = authenticate(email=cleaned_data['email'], password=cleaned_data['password'])
+            user = authenticate(
+                email=cleaned_data['email'],
+                password=cleaned_data['password']
+            )
             if user is not None:
                 if user.is_active:
                     login(request, user)
                     return HttpResponseRedirect(reverse('furniture:index'))
             else:
-                form.add_error(None, 'Неверный email или пароль.')    
+                form.add_error(None, 'Неверный email или пароль.')
     context = {
         'form': form
-    }   
+    }
     return render(request, 'users/login_page.html', context=context)
 
 
@@ -60,8 +63,8 @@ def user_logout_view(request):
 
 
 class UserProfileView(LoginRequiredMixin, UpdateView):
-    model = User 
-    form_class = UserUpdateForm 
+    model = User
+    form_class = UserUpdateForm
     template_name = 'users/user_profile.html'
     success_url = reverse_lazy('furniture:index')
 
