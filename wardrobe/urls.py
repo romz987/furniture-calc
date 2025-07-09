@@ -1,6 +1,6 @@
 from django.urls import path 
 from wardrobe.apps import WardrobeConfig
-from wardrobe.views import WardrobeView, WardrobeSaveOrderView, WardrobeOrderDetailView, combination_not_found_view, save_order_success_view, orders_list_view, order_delete_view, OrderUpdateView
+from wardrobe.views import WardrobeView, WardrobeSaveOrderView, WardrobeOrderDetailView, combination_not_found_view, save_order_success_view, orders_list_view, order_delete_view, OrderUpdateView, deactivated_list_view
 
 app_name = WardrobeConfig.name
 
@@ -14,4 +14,6 @@ urlpatterns = [
     path('order_detail/<int:pk>/', WardrobeOrderDetailView.as_view(), name='show_wardrobe_order_detail'), 
     path('order_delete/<int:pk>/', order_delete_view, name='order_delete'),
     path('order_update/<int:pk>/', OrderUpdateView.as_view(), name='wardrobe_order_update'),
+    # admin
+    path('management/wardrobe-deactivated/', deactivated_list_view, name='wardrobe_deactivated')
 ]
