@@ -45,7 +45,7 @@
                   {% endif %}
                 </td>
                 <td>
-                  <a href="{% url 'users:toggle_activity' object.id %}" style="cursor: pointer;">
+                  <a href="{% url 'users:toggle_user_activity' object.id %}" style="cursor: pointer;">
                   {% if object.is_active %}
                     Деактивировать
                   {% else %}
