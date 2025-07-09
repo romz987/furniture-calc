@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views import View 
+from django.views import View
 from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, Http404
@@ -12,8 +11,8 @@ from reference.models import (
     MaterialThickness,
     MaterialColor,
     DoorType,
-    BoxSummary, 
-    DoorSummary, 
+    BoxSummary,
+    DoorSummary,
     DoorHandle,
 )
 from .services import CalculateWardrobe
@@ -54,7 +53,7 @@ class WardrobeView(LoginRequiredMixin, View):
             if not info["door_price_per_sqm"]:
                 request.session['combination_error'] = 'door'
                 return redirect('wardrobe:combination_not_found')
-            # Получаем данные выбранной ручки 
+            # Получаем данные выбранной ручки
             info.update(self.get_handle_data(info))
             # Считаем
             calculator = CalculateWardrobe()
@@ -62,12 +61,12 @@ class WardrobeView(LoginRequiredMixin, View):
             # Нормализация
             info = self.normalize_info(info)
             # Сохраняем результат в сессии
-            request.session['wardrobe_size'] = size 
+            request.session['wardrobe_size'] = size
             request.session['wardrobe_info'] = info
             # На страницу результатов
             return render(
-                request, 
-                self.template_result, 
+                request,
+                self.template_result,
                 {'form': form, 'size': size, 'info': info}
             )
         return render(request, self.template_name, {'form': form})
@@ -97,7 +96,7 @@ class WardrobeView(LoginRequiredMixin, View):
 
     def get_form_data(self, model_one, model_two, field_name):
         """
-        Get distinct used data 
+        Get distinct used data
         :param model_one: main model
         :param_model_two: summary model
         :param field_name: field name
@@ -117,8 +116,8 @@ class WardrobeView(LoginRequiredMixin, View):
             "box_material_color": form.cleaned_data["box_colors"],
             # двери
             "door_type": form.cleaned_data["door_types"],
-            "door_material_thickness": form.cleaned_data["door_thicknesses"],            
-            "door_material_color": form.cleaned_data["door_colors"],  
+            "door_material_thickness": form.cleaned_data["door_thicknesses"],
+            "door_material_color": form.cleaned_data["door_colors"],
             # фурнитура
             "handle_name": form.cleaned_data["handle_name"],
             "handle_ammount": 2
@@ -152,11 +151,11 @@ class WardrobeView(LoginRequiredMixin, View):
             name=info["handle_name"]
         ).first()
         return {
-            "handle_price_per_one": handle.price_per_one, 
-            "handle_length": handle.length, 
-            "handle_color": handle.color, 
+            "handle_price_per_one": handle.price_per_one,
+            "handle_length": handle.length,
+            "handle_color": handle.color,
             "handle_material": handle.material
-        } 
+        }
 
     def normalize_info(self, info):
         # короб
@@ -166,7 +165,7 @@ class WardrobeView(LoginRequiredMixin, View):
         # двери
         info["door_type"] = info["door_type"].name
         info["door_material_thickness"] = info["door_material_thickness"].thickness
-        info["door_material_color"] = info["door_material_color"].name 
+        info["door_material_color"] = info["door_material_color"].name
         # фурнитура
         info["handle_name"] = info["handle_name"].name
         # остальные
@@ -181,14 +180,14 @@ class WardrobeView(LoginRequiredMixin, View):
 
 class WardrobeSaveOrderView(LoginRequiredMixin, View):
     template_name = 'wardrobe_save_order.html'
-    model_orders = Orders
+    model = Orders
     form_class = SaveOrderForm
 
     def get(self, request):
         # Проверим, существует ли заказ
-        if 'wardrobe_info' not in request.session \
-            and 'wardrobe_size' not in request.session:
-                return redirect('wardrobe:calculator')
+        if ('wardrobe_info' not in request.session
+                and 'wardrobe_size' not in request.session):
+            return redirect('wardrobe:calculator')
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
 
@@ -202,7 +201,7 @@ class WardrobeSaveOrderView(LoginRequiredMixin, View):
             self.save_order(request, form, size, info)
             request.session["save_order"] = True
         return redirect('wardrobe:save_order_success')
-    
+
     def get_data_from_session(self, request):
         size = request.session.get('wardrobe_size')
         info = request.session.get('wardrobe_info')
@@ -211,7 +210,7 @@ class WardrobeSaveOrderView(LoginRequiredMixin, View):
         return size, info
 
     def save_order(self, request, form, size, info):
-        order = self.model_orders.objects.create(
+        self.model.objects.create(
             # заказчик
             customer_name=form.cleaned_data['customer_name'],
             customer_surname=form.cleaned_data['customer_surname'],
@@ -254,12 +253,13 @@ class WardrobeSaveOrderView(LoginRequiredMixin, View):
 
 class WardrobeOrderDetailView(LoginRequiredMixin, View):
     template_name = 'wardrobe_order_details.html'
-    model_orders = Orders
+    model = Orders
 
     def get(self, request, pk):
-        order_record = get_object_or_404(self.model_orders, pk=pk)
+        order_record = get_object_or_404(self.model, pk=pk)
         # Проверка владельца
-        if order_record.owner != request.user and not request.user.is_superuser:
+        if (order_record.owner != request.user and
+                not request.user.is_superuser):
             raise Http404
         customer_data = self.prepare_customer_data(order_record)
         order_size = self.prepare_order_size(order_record)
@@ -310,14 +310,13 @@ class WardrobeOrderDetailView(LoginRequiredMixin, View):
             'handle_name': order_record.handle_name,
             'handle_material': order_record.handle_material,
             'handle_color': order_record.handle_color,
-            'handle_length': order_record.handle_length,            
+            'handle_length': order_record.handle_length,
             'handle_price_per_one': order_record.handle_price_per_one,
             'handle_ammount': order_record.handle_ammount,
             'handle_price': order_record.handle_price,
             # итоговая цена
             'total_price': order_record.total_price,
         }
-
 
     def normalize_info(self, info):
         info["material_type"] = info["material_type"].name
@@ -333,8 +332,8 @@ class WardrobeOrderDetailView(LoginRequiredMixin, View):
         return info
 
 
-class OrderUpdateView(LoginRequiredMixin, UpdateView):
-    model = Orders 
+class WardrobeOrderUpdateView(LoginRequiredMixin, UpdateView):
+    model = Orders
     form_class = UpdateOrderForm
     template_name = 'wardrobe_order_update.html'
     success_url = reverse_lazy('wardrobe:show_wardrobe_orders')
@@ -342,17 +341,19 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         order_record = super().get_object()
         # Проверка пользователя
-        if order_record.owner != self.request.user and not self.request.user.is_superuser:
+        if (order_record.owner != self.request.user and
+                not self.request.user.is_superuser):
             raise Http404
         return order_record
 
 
 @login_required
-def orders_list_view(request):
+def wardrobe_orders_list_view(request):
     if request.user.is_superuser:
-        objects_list = Orders.objects.all()
+        objects_list = Orders.objects.filter(is_active=True).order_by('id')
     else:
-        objects_list = Orders.objects.filter(owner=request.user)
+        objects_list = Orders.objects.filter(
+            owner=request.user, is_active=True).order_by('id')
     template_name = 'wardrobe_orders_list.html'
     context = {
         'title': 'Заказы шкафов',
@@ -362,7 +363,7 @@ def orders_list_view(request):
 
 
 @login_required
-def order_delete_view(request, pk):
+def wardrobe_order_delete_view(request, pk):
     order_record = get_object_or_404(Orders, pk=pk)
     order_number = order_record.id
     # Проверка пользователя
@@ -389,7 +390,7 @@ def save_order_success_view(request):
     url = 'wardrobe:show_wardrobe_orders'
     template_name = 'wardrobe_save_order_success.html'
     context = {
-        'url':reverse(url) 
+        'url': reverse(url),
     }
     return render(request, template_name, context=context)
 
@@ -406,3 +407,99 @@ def combination_not_found_view(request):
         'error': error
     }
     return render(request, template_name, context=context)
+
+
+# Management
+@login_required
+def wardrobe_deactivated_list_view(request):
+    # Проверка привилегий
+    if not request.user.is_superuser:
+        raise Http404
+    objects_list = Orders.objects.filter(is_active=False).order_by('id')
+    template_name = 'wardrobe_orders_list.html'
+    context = {
+        'title': 'Отмененные заказы шкафов',
+        'status': 'inactive',
+        'objects_list': objects_list
+    }
+    return render(request, template_name, context=context)
+
+
+@login_required
+def toggle_order_active_view(request, pk):
+    # Проверка привилегий
+    if not request.user.is_superuser:
+        raise Http404
+    # Меняем активность
+    order = get_object_or_404(Orders, pk=pk)
+    order.is_active = not order.is_active
+    order.save()
+    return redirect('wardrobe:wardrobe_deactivated')
+
+
+class WardrobeDeactivatedDetailView(LoginRequiredMixin, View):
+    template_name = 'wardrobe_deactivated_order_details.html'
+    model_orders = Orders
+
+    def get(self, request, pk):
+        # Проверка привилегий
+        if not request.user.is_superuser:
+            raise Http404
+        order_record = get_object_or_404(
+            self.model_orders, pk=pk, is_active=False)
+        customer_data = self.prepare_customer_data(order_record)
+        order_size = self.prepare_order_size(order_record)
+        order_info = self.prepare_order_info(order_record)
+        context = {
+            'customer_data': customer_data,
+            'order_size': order_size,
+            'order_info': order_info,
+        }
+        return render(request, self.template_name, context=context)
+
+    def prepare_customer_data(self, order_record):
+        return {
+            'order_id': order_record.id,
+            'customer_name': order_record.customer_name,
+            'customer_surname': order_record.customer_surname,
+            'phone': order_record.phone,
+            'email': order_record.email,
+            'order_date': order_record.order_date,
+            'owner': order_record.owner,
+        }
+
+    def prepare_order_size(self, order_record):
+        return {
+            'height': order_record.height,
+            'width': order_record.width,
+            'depth': order_record.depth,
+            'box_square': order_record.box_square,
+            'door_square': order_record.door_square,
+        }
+
+    def prepare_order_info(self, order_record):
+        return {
+            'material_type': order_record.material_type,
+            'box_material_thickness': order_record.box_material_thickness,
+            'box_material_color': order_record.box_material_color,
+            'box_price_per_sqm': order_record.box_price_per_sqm,
+            'box_square': order_record.box_square,
+            'box_price': order_record.box_price,
+            # двери
+            'door_type': order_record.door_type,
+            'door_material_thickness': order_record.door_material_thickness,
+            'door_material_color': order_record.door_material_color,
+            'door_price_per_sqm': order_record.door_price_per_sqm,
+            'door_square': order_record.door_square,
+            'door_price': order_record.door_price,
+            # фурнитура
+            'handle_name': order_record.handle_name,
+            'handle_material': order_record.handle_material,
+            'handle_color': order_record.handle_color,
+            'handle_length': order_record.handle_length,
+            'handle_price_per_one': order_record.handle_price_per_one,
+            'handle_ammount': order_record.handle_ammount,
+            'handle_price': order_record.handle_price,
+            # итоговая цена
+            'total_price': order_record.total_price,
+        }
