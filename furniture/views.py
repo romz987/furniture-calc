@@ -46,6 +46,7 @@ def kitchen_man_view(request):
     return render(request, template_name)
 
 
+
 # Дополнительно
 # заглушки для калькуляторов
 @login_required
@@ -72,10 +73,8 @@ def kitchen_calc_plug_view(request):
 @login_required
 def dresser_orders_plug_view(request):
     template_name = 'orders_plugs/order_plug.html'
-    text = 'Заказы на комод'
     context = {
-        'title': text.capitalize(),
-        'in_text': text,
+        'title': 'Заказы на комод',
     }
     return render(request, template_name, context=context)
 
@@ -83,9 +82,30 @@ def dresser_orders_plug_view(request):
 @login_required
 def kitchen_orders_plug_view(request):
     template_name = 'orders_plugs/order_plug.html'
-    text = 'Заказы на кухни'
     context = {
-        'title': text.capitalize(),
-        'in_text': text,
+        'title': 'Заказы на кухни',
+    }
+    return render(request, template_name, context=context)
+
+
+# заглушки для отмененных заказов
+@login_required
+def dresser_deactivated_plug_view(request):
+    if not request.user.is_superuser:
+        raise Http404
+    template_name = 'orders_plugs/order_plug.html'
+    context = {
+        'title': 'Отмененные заказы на комод',
+    }
+    return render(request, template_name, context=context)
+
+
+@login_required
+def kitchen_deactivated_plug_view(request):
+    if not request.user.is_superuser:
+        raise Http404
+    template_name = 'orders_plugs/order_plug.html'
+    context = {
+        'title': 'Отмененные заказы на кухни',
     }
     return render(request, template_name, context=context)
