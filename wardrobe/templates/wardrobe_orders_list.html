@@ -1,12 +1,11 @@
 {% extends 'furniture/base.html' %}
 {% load static %}
 
-
 {% block content %}
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <h1 class="h3 mb-2 text-gray-800">Заказы шкафов</h1>
+  <h1 class="h3 mb-2 text-gray-800">{{ title }}</h1>
 
   <!-- DataTales -->
   <div class="card shadow border-primary mb-4 mt-5">
@@ -43,24 +42,17 @@
                   <td>{{ object.owner.first_name }} {{ object.owner.last_name }}</td>
                 {% endif %}
                 <td>{{ object.order_date }}</td>
-                <td><a href="{% url 'wardrobe:show_wardrobe_order_detail' object.id %}" style="cursor: pointer;">Подробности</a></td>
+                {% if status == 'inactive' %}
+                  <td><a href="{% url 'wardrobe:order_delete' object.id %}" style="cursor: pointer;">Удалить</a></td>
+                {% else %}
+                  <td><a href="{% url 'wardrobe:show_wardrobe_order_detail' object.id %}" style="cursor: pointer;">Подробности</a></td>
+                {% endif %}
               </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
-
-
     </div>
   </div>
-
 </div>
-{% endblock %}
-
-
-{% block scripts %}
-{{ block.super }}
-<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
 {% endblock %}
