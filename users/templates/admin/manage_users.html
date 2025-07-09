@@ -1,0 +1,64 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">{{ title }}</h1>
+
+  <!-- Card -->
+  <div class="card shadow border-primary mb-4 mt-5">
+    <! --Header -->
+    <div class="card-header bg-primary h6 text-white">
+      <i class="fa-regular fa-circle-user"></i>
+    </div>
+    <div class="card-body">
+
+      <div class="table-responsive">
+        <table id="dataTable" class="table table-bordered" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Имя</th>
+              <th>Email</th>
+              <th>Телефон</th>
+              <th>Telegram</th>
+              <th>Статус</th>
+              <th>Изменить</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for object in objects_list %}
+              <tr>
+                <td>{{ object.id }}</td>
+                <td>{{ object.first_name }} {{ object.last_name }}</td>
+                <td>{{ object.email }}</td>
+                <td>{{ object.phone|default:"нет" }}</td>
+                <td>{{ object.telegram|default:"нет" }}</td>
+                <td>
+                  {% if object.is_active %}
+                    <span class="text-success">Активен</span>
+                  {% else %}
+                    Неактивен
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="{% url 'users:toggle_activity' object.id %}" style="cursor: pointer;">
+                  {% if object.is_active %}
+                    Деактивировать
+                  {% else %}
+                    Активировать
+                  {% endif %}
+                 </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
