@@ -33,19 +33,20 @@
        <!-- buttons -->
       <div class="d-flex flex-wrap justify-content-between px-4 mb-4">
           <a href="javascript:window.history.back();" class="btn btn-outline-secondary btn-lg px-4 mr-2">Назад</a>
-          <! --dropdown button -->
-          <div class="dropdown">
-            <button class="btn btn-info btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-              Действия
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item lead" href="{% url 'wardrobe:wardrobe_order_update' customer_data.order_id %}">Изменить</a>
-              <a class="dropdown-item lead" href="{% url 'wardrobe:toggle_order_activity' customer_data.order_id %}">Деактивировать</a>
-              {% if user.is_superuser %}
-                <a class="dropdown-item lead" href="{% url 'wardrobe:order_delete' customer_data.order_id %}">Удалить</a>
-              {% endif %}
+          {% if user.is_superuser %}
+            <! --dropdown button -->
+            <div class="dropdown">
+              <button class="btn btn-info btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                Действия
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item lead" href="{% url 'wardrobe:toggle_order_activity' customer_data.order_id %}">Восстановить</a>
+                {% if user.is_superuser %}
+                  <a class="dropdown-item lead" href="{% url 'wardrobe:order_delete' customer_data.order_id %}">Удалить</a>
+                {% endif %}
+              </div>
             </div>
-          </div>
+          {% endif %}
         </div>
       </div
     </div>

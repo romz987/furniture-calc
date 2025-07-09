@@ -43,7 +43,7 @@
                 {% endif %}
                 <td>{{ object.order_date }}</td>
                 {% if status == 'inactive' %}
-                  <td><a href="{% url 'wardrobe:order_delete' object.id %}" style="cursor: pointer;">Удалить</a></td>
+                  <td><a href="{% url 'wardrobe:wardrobe_deactivated_details' object.id %}" style="cursor: pointer;">Подробности</a></td>
                 {% else %}
                   <td><a href="{% url 'wardrobe:show_wardrobe_order_detail' object.id %}" style="cursor: pointer;">Подробности</a></td>
                 {% endif %}
