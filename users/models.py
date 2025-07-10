@@ -27,7 +27,8 @@ class User(AbstractUser):
 
 
 class ActiveInvites(models.Model):
-    invite_number = models.CharField(max_length=50, verbose_name='Инвайт', blank=True, null=True) 
+    invite_number = models.CharField(max_length=50, verbose_name='Инвайт') 
+    invite_url = models.CharField(max_length=300, verbose_name="Инвайт URL")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
