@@ -5,10 +5,10 @@
 <div class="container-sm">
 
     <!-- Page Heading -->
-    <h2 class="mb-2 text-gray-700">Детали заказа</h2>
+    <h2 class="mb-2 text-gray-700 main-header-custom-resp">Обновить данные</h2>
 
     <!-- Card User Info -->
-    <div class="card shadow my-5">
+    <div class="card shadow my-5 custom-resp">
       <! --Card Header -->
       <div class="card-header h5 text-light bg-success">
         <i class="fa-regular fa-circle-user"></i>
@@ -17,24 +17,24 @@
       <div class="card-body">
         <h3 class="text-dark">Заказчик</h3>
         <!-- Customer info -->
-        <div class="px-4 pt-4 pb-2 m-3 rounded lead">
           <p>
             <form method="post">
-              {% csrf_token %}
-              {{ form.as_p }}
+              <div class="px-2 pt-4 pb-2 m-3 rounded lead">
+                {% csrf_token %}
+                {{ form.as_p }}
+              </div>
               <div class="mt-5">
                 <a class="btn btn-outline-secondary btn-lg" href="{% url 'wardrobe:show_wardrobe_orders' %}">Назад</a>
                 <button type="submit" class="btn btn-success btn-lg float-right">Сохранить</button>
               </div>
             </form>
           </p>
-        </div>
       </div>
     </div>
 
 
     <!-- Card Order Summary -->
-    <div class="card shadow my-5">
+    <div class="card shadow my-5 custom-resp">
       <! --Card Header -->
       <div class="card-header h5">
         <i class="fa-regular fa-rectangle-list"></i>
@@ -68,6 +68,8 @@
         </div>
 
         <!-- wardrobe box -->
+        <br>
+        <br>
         <h4 class="px-2 mb-3 mt-4">Короб</h4>        
         <div class="px-4">
           <div class="table-responsive">
@@ -98,6 +100,8 @@
 
 
         <!-- wardrobe doors -->
+        <br>
+        <br>
         <h4 class="px-2 mb-3 mt-5">Двери</h4>    
         <div class="px-4">
           <div class="table-responsive">
@@ -128,6 +132,8 @@
 
 
         <!-- furniture -->
+        <br>
+        <br>
         <h4 class="px-2 mb-3 mt-5">Фурнитура</h4>    
         <div class="px-4 mb-5">
           <div class="table-responsive">

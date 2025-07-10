@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container-sm">
     <! --Card -->
-    <div class="card shadow my-5">
+    <div class="card shadow my-5 custom-resp">
 
       <div class="card-header bg-success h6 text-light">
         <i class="fa-solid fa-database"></i>
@@ -14,15 +14,15 @@
       <div class="card-body">
         <h3 class="text-dark p-3">{{ title }}</h3>
         <! --Form -->
-        <div class="px-4 pb-2 m-3 rounded lead">
-          <form method="post">
+        <form method="post">
+          <div class="px-4 pb-2 m-3 rounded lead">
             {% csrf_token %}
             {{ form.as_p }}
-            <a class="btn btn-outline-secondary btn-lg mt-4" href="javascript:window.history.back();">Назад</a>
-            <button type="submit" class="btn btn-success btn-lg float-right mt-4 ml-3">Сохранить</button>
-            <a class="btn btn-danger btn-lg float-right mt-4" href="{% url 'reference:ref_boxsummary_delete' object.id %}">Удалить</a>
-          </form>
-        </div>
+          </div>
+          <a class="btn btn-outline-secondary btn-lg mt-4" href="javascript:window.history.back();">Назад</a>
+          <button type="submit" class="btn btn-success btn-lg float-right mt-4 ml-3">Сохранить</button>
+          <a class="btn btn-danger btn-lg float-right mt-4" href="{% url 'reference:ref_boxsummary_delete' object.id %}">Удалить</a>
+        </form>
       </div>
     </div>
 </div>
