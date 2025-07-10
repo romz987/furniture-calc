@@ -1,3 +1,6 @@
+import random
+import string
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, reverse, get_object_or_404, redirect
@@ -5,9 +8,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 from django.views.generic import UpdateView
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm
-from users.models import User
+from users.models import User, ActiveInvites
 
 
 def user_register_view(request):
@@ -81,9 +85,11 @@ def manage_users_view(request):
     # Возврашаем страницу
     template_name = 'admin/manage_users.html'
     objects_list = User.objects.filter(is_superuser=False)
+    invites_list = ActiveInvites.objects.all()
     context = {
         'title': 'Управление пользователями',
         'objects_list': objects_list,
+        'invites_list': invites_list,
     }
     return render(request, template_name, context=context)
 
@@ -98,3 +104,43 @@ def toggle_user_active_view(request, pk):
     user.is_active = not user.is_active
     user.save()
     return redirect('users:manage_users')
+
+
+class GenerateInvite(LoginRequiredMixin, View):
+    template_name = 'admin/generate_invite.html'
+    model = ActiveInvites
+
+    def get(self, request):
+        # Проверка привилегий
+        if not request.user.is_superuser:
+            raise Http404
+        return render(request, self.template_name)
+
+
+    def post(self, request):
+        # Проверка привилегий
+        if not request.user.is_superuser:
+            raise Http404
+        # Извлекаем ссылку из запроса
+        project_url = request.POST.get("current-url")
+        # Генерируем значение инвайта
+        invite_number = self.gen_invite_number()
+        # Склеиваем значение со ссылкой
+        registration_url = project_url + 'user/register/?invite=' + invite_number
+        # Сохраняем значение в базу данных 
+        record_object = self.model(invite_number=invite_number)
+        record_object.save()
+        # Отдаем ссылку в шаблон
+        context = {
+            'reg_url': registration_url,
+        }
+        return render(request, self.template_name, context=context)
+
+
+    def gen_invite_number(self):
+        # Дата и время
+        timestamp_part = datetime.now().strftime('%d%m%y%H%M')
+        # 20 случайных цифр
+        alphabet = string.ascii_letters + string.digits
+        random_part = ''.join(random.choices(alphabet, k=30))
+        return timestamp_part + random_part
