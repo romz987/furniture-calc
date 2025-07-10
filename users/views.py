@@ -106,7 +106,7 @@ def toggle_user_active_view(request, pk):
     return redirect('users:manage_users')
 
 
-class GenerateInvite(LoginRequiredMixin, View):
+class GenerateInviteView(LoginRequiredMixin, View):
     template_name = 'admin/generate_invite.html'
     model = ActiveInvites
 
@@ -124,11 +124,11 @@ class GenerateInvite(LoginRequiredMixin, View):
         # Извлекаем ссылку из запроса
         project_url = request.POST.get("current-url")
         # Генерируем значение инвайта
-        invite_number = self.gen_invite_number()
+        invite_number = self.__gen_invite_number()
         # Склеиваем значение со ссылкой
         registration_url = project_url + 'user/register/?invite=' + invite_number
         # Сохраняем значение в базу данных 
-        record_object = self.model(invite_number=invite_number)
+        record_object = self.model(invite_number=invite_number, invite_url=registration_url)
         record_object.save()
         # Отдаем ссылку в шаблон
         context = {
@@ -137,10 +137,33 @@ class GenerateInvite(LoginRequiredMixin, View):
         return render(request, self.template_name, context=context)
 
 
-    def gen_invite_number(self):
+    def __gen_invite_number(self):
         # Дата и время
         timestamp_part = datetime.now().strftime('%d%m%y%H%M')
         # 20 случайных цифр
         alphabet = string.ascii_letters + string.digits
         random_part = ''.join(random.choices(alphabet, k=30))
         return timestamp_part + random_part
+
+
+@login_required
+def invite_details_view(request, pk):
+    # Проверка привилегий
+    if not request.user.is_superuser:
+        raise Http404
+    invite_record = get_object_or_404(ActiveInvites, pk=pk)
+    template_name = 'admin/invite_details.html'
+    context = {
+        'invite': invite_record,
+    }
+    return render(request, template_name, context=context)
+
+
+@login_required
+def delete_invite_view(request, pk):
+    # Проверка привилегий
+    if not request.user.is_superuser:
+        raise Http404
+    invite_record = get_object_or_404(ActiveInvites, pk=pk)
+    invite_record.delete()
+    return redirect('users:manage_users')
