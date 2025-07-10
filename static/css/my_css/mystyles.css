@@ -1,0 +1,157 @@
+@media (max-width: 768px) {
+    .card.custom-resp h1 {
+        font-size: 1.9rem;
+    }
+
+    .card.custom-resp h2 {
+        font-size: 1.9rem;
+    }
+
+    .card.custom-resp h3 {
+        font-size: 1.5rem;
+    }
+
+    .card.custom-resp h4 {
+        font-size: 1.3rem;
+    }
+
+    .card.custom-resp p {
+        font-size: 1.2rem;
+    }
+
+    .card.custom-resp li {
+        font-size: 1.2rem;
+    }
+
+    .card.custom-resp label {
+        font-size: 1.2rem;
+    }
+  
+    .card.custom-resp input {
+        font-size: 1.2rem;
+    }
+
+    .card.custom-resp .table-responsive {
+        font-size: 1rem;
+    }
+
+    .card.custom-resp {
+        margin-left: -40px;
+        margin-right: -40px;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .main-header-custom-resp {
+        display: none;
+    }
+
+    .card.custom-resp h1 {
+        font-size: 1.7rem;
+    }
+
+    .card.custom-resp h2 {
+        font-size: 1.7rem;
+    }
+
+    .card.custom-resp h3 {
+        font-size: 1.3rem;
+    }
+
+    .card.custom-resp h4 {
+        font-size: 1.1rem;
+    }
+
+    .card.custom-resp p {
+        font-size: 1rem;
+    }
+
+    .card.custom-resp li {
+        font-size: 1rem;
+    }
+
+    .card.custom-resp label {
+        font-size: 1rem;
+    }
+  
+    .card.custom-resp input {
+        font-size: 1rem;
+    }
+
+    .card.custom-resp .table-responsive {
+        font-size: 0.9rem;
+    }
+
+    .card.custom-resp {
+        margin-left: -40px;
+        margin-right: -40px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .main-header-custom-resp {
+        display: none;
+    }
+
+    .card.custom-resp h1 {
+        font-size: 1.5rem;
+    }
+
+    .card.custom-resp h2 {
+        font-size: 1.5rem;
+    }
+
+    .card.custom-resp h3 {
+        font-size: 1.1rem;
+    }
+
+    .card.custom-resp h4 {
+        font-size: 1.1rem;
+    }
+
+    .card.custom-resp p {
+        font-size: 0.8rem;
+    }
+  
+    .card.custom-resp li {
+        font-size: 0.8rem;
+    }
+
+    .card.custom-resp span {
+        font-size: 0.5rem;
+    }
+
+    .card.custom-resp label {
+        font-size: 0.8rem;
+    }
+  
+    .card.custom-resp input {
+        font-size: 0.8rem;
+    }
+
+    .card.custom-resp .table-responsive {
+        font-size: 0.7rem;
+    }
+
+    .card.custom-resp {
+        margin-left: -40px;
+        margin-right: -40px;
+    }
+
+    .card.custom-resp .btn-lg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .card.custom-resp .btn-lg {
+      padding-left: 0;
+      padding-right: 0;        
+      padding-top: 11px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      width: 110px;
+      height: 40px;
+    }
+}
