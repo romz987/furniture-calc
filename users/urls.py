@@ -9,6 +9,9 @@ from users.views import (
     UserProfileView,
     manage_users_view,
     toggle_user_active_view,
+    GenerateInviteView,
+    invite_details_view,
+    delete_invite_view,
 )
 
 app_name = UsersConfig.name 
@@ -23,5 +26,8 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='user_profile'),
     # admin
     path('management/manage-users/', manage_users_view, name='manage_users'),
-    path('management/togggle-user-activity/<int:pk>/', toggle_user_active_view, name="toggle_user_activity")
+    path('management/togggle-user-activity/<int:pk>/', toggle_user_active_view, name="toggle_user_activity"),
+    path('management/generate-invite/', GenerateInviteView.as_view(), name="generate_invite"),
+    path('management/invite-details/<int:pk>/', invite_details_view, name="invite-details"),
+    path('management/delete_invite/<int:pk>/', delete_invite_view, name="delete_invite")
 ]
