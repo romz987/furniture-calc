@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import User
+from users.models import User, ActiveInvites
 
 # model registration in admin panel
 
@@ -11,3 +11,5 @@ from users.models import User
 class UserAdmin(admin.ModelAdmin):
     list_display = ('last_name', 'first_name', 'pk')
     list_filter = ('last_name', )
+
+admin.site.register(ActiveInvites)
