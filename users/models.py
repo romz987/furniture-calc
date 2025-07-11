@@ -6,13 +6,13 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     username = None
-    first_name = models.CharField(max_length=50, verbose_name='Имя', blank=True, null=True)
-    last_name = models.CharField(max_length=50, verbose_name='Фамилия', blank=True, null=True)
+    first_name = models.CharField(max_length=50, verbose_name='Имя')
+    last_name = models.CharField(max_length=50, verbose_name='Фамилия')
     email = models.EmailField(unique=True, verbose_name='Email')
     phone = models.CharField(max_length=12, unique=True ,verbose_name='Номер телефона', blank=True, null=True)
     telegram = models.CharField(max_length=150, unique=True, verbose_name='Telegram', blank=True, null=True)
     is_active = models.BooleanField(default=True, verbose_name='Активность')
-    invite_number = models.CharField(max_length=50, verbose_name='Инвайт', blank=True, null=True)
+    invite_number = models.CharField(max_length=50, verbose_name='Инвайт')
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
