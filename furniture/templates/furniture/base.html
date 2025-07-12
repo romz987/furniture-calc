@@ -151,7 +151,7 @@
 
             <!--User Control -->
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'users:manage_users' %}">
+              <a class="nav-link" href="{% url 'users:manage-users' %}">
                     <i class="fa-regular fa-circle-user"></i>
                     <span><b>Пользователи</b></span></a>
             </li>
@@ -195,12 +195,12 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{% url 'users:user_profile' %}">
+                                <a class="dropdown-item" href="{% url 'users:user-profile' %}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Профиль
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{% url 'users:user_logout' %}">
+                                <a class="dropdown-item" href="{% url 'users:user-logout' %}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Выход
                                 </a>
@@ -209,7 +209,7 @@
                     </ul>
                     {% else %}
                     <div class="d-flex ml-auto">
-                      <a class="btn btn-info" href="{% url 'users:user_login' %}">Авторизация</a>
+                      <a class="btn btn-info" href="{% url 'users:user-login' %}">Авторизация</a>
                     </div>
                     {% endif %}
                 </nav>
