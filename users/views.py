@@ -144,12 +144,6 @@ def activation_success_view(request):
     return render(request, template_name)
 
 
-# Восстановление пароля
-def restore_password_view(request):
-    template_name = 'users/user_password_recovery.html'
-    return render(request, template_name)
-
-
 # Запрос на восстановление пароля
 class MyPasswordResetView(PasswordResetView):
     template_name = 'users/user_password_recovery.html'
