@@ -8,18 +8,18 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import View 
+from django.views import View
 from django.views.generic.edit import FormView
 # Формы
 from users.forms import (
-    UserLoginForm, 
-    UserRegisterForm, 
+    UserLoginForm,
+    UserRegisterForm,
     UserUpdateForm,
     MySetPasswordForm,
 )
 # Воостановление пароля
 from django.contrib.auth.views import (
-    PasswordResetView, 
+    PasswordResetView,
     PasswordResetConfirmView
 )
 # Мои сервисы и модели
@@ -31,14 +31,14 @@ from users.services import (
 )
 
 # Генерация токена для подтверждения регистрации
-from django.utils.http import urlsafe_base64_encode 
+from django.utils.http import urlsafe_base64_encode
 from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.tokens import default_token_generator 
+from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 
 
-## Логин
+# Логин
 class UserLoginView(FormView):
     template_name = 'users/user_login.html'
     form_class = UserLoginForm
@@ -62,12 +62,12 @@ class UserLoginView(FormView):
         return self.form_invalid(form)
 
 
-## Регистрация
+# Регистрация
 class UserRegisterView(CreateView):
-    model = User 
-    form_class = UserRegisterForm 
+    model = User
+    form_class = UserRegisterForm
     template_name = 'users/user_register.html'
-    success_url = None 
+    success_url = reverse_lazy('users:user-registered')
 
     def dispatch(self, request, *args, **kwargs):
         # Проверка на авториазацию
@@ -91,20 +91,23 @@ class UserRegisterView(CreateView):
         token = default_token_generator.make_token(user)
         # Собираем ссылку
         activation_link = self.request.build_absolute_uri(
-            reverse("users:activate-account", kwargs={"uidb64": uid, "token": token})
+            reverse(
+                "users:activate-account",
+                kwargs={"uidb64": uid, "token": token}
+            )
         )
         send_register_verification_email(user.email, activation_link)
         return HttpResponseRedirect(reverse('users:user-registered'))
 
     def form_invalid(self, form):
         messages.error(
-            self.request, 
+            self.request,
             'Проверьте правильность введённых данных.'
         )
         return super().form_invalid(form)
 
 
-## Подтверждение аккаунта
+# Подтверждение аккаунта
 def activate_account_view(request, uidb64, token):
     try:
         # Декодируем uid из base64 обратно в строку, затем в int
@@ -123,35 +126,35 @@ def activate_account_view(request, uidb64, token):
         return redirect('users:activation-failed')
 
 
-## Успешная регистрация
+# Успешная регистрация
 def successful_register_view(request):
     template_name = 'users/user_registration_success.html'
     return render(request, template_name)
 
 
-## Неуспешная активация аккаунта
+# Неуспешная активация аккаунта
 def activation_failed_view(request):
     template_name = 'users/user_activation_failed.html'
     return render(request, template_name)
 
 
-## Успешная активация аккаунта
+# Успешная активация аккаунта
 def activation_success_view(request):
     template_name = 'users/user_activation_success.html'
     return render(request, template_name)
 
 
-## Восстановление пароля
+# Восстановление пароля
 def restore_password_view(request):
     template_name = 'users/user_password_recovery.html'
     return render(request, template_name)
 
 
-## Запрос на восстановление пароля
+# Запрос на восстановление пароля
 class MyPasswordResetView(PasswordResetView):
     template_name = 'users/user_password_recovery.html'
-    email_template_name='email/password_reset_email.html'
-    success_url=reverse_lazy('users:user-login')
+    email_template_name = 'email/password_reset_email.html'
+    success_url = reverse_lazy('users:user-login')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -159,11 +162,11 @@ class MyPasswordResetView(PasswordResetView):
         return super().dispatch(request, *args, **kwargs)
 
 
-## Форма восстановление пароля
+# Форма восстановление пароля
 class MyPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name='users/user_password_recovery_form.html'
+    template_name = 'users/user_password_recovery_form.html'
     form_class = MySetPasswordForm
-    success_url=reverse_lazy('users:password-reset-success')
+    success_url = reverse_lazy('users:password-reset-success')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -171,7 +174,7 @@ class MyPasswordResetConfirmView(PasswordResetConfirmView):
         return super().dispatch(request, *args, **kwargs)
 
 
-## Успешная смена пароля
+# Успешная смена пароля
 def password_changed_view(request):
     if request.user.is_authenticated:
         return redirect('furniture:index')
@@ -179,14 +182,14 @@ def password_changed_view(request):
     return render(request, template_name)
 
 
-## Выход из аккаунта
+# Выход из аккаунта
 @login_required
 def user_logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('users:user-login'))
 
 
-## Управление профилем пользователя
+# Управление профилем пользователя
 class UserProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
@@ -239,7 +242,6 @@ class GenerateInviteView(LoginRequiredMixin, View):
             raise Http404
         return render(request, self.template_name)
 
-
     def post(self, request):
         # Проверка привилегий
         if not request.user.is_superuser:
@@ -248,14 +250,14 @@ class GenerateInviteView(LoginRequiredMixin, View):
         invite_number = self.__gen_invite_number()
         # Создаем ссылку
         registration_url = (
-            request.scheme + 
-                '://' + request.get_host() + 
-                    '/user/register/?invite=' + 
+            request.scheme +
+                '://' + request.get_host() +
+                    '/user/register/?invite=' +
                         invite_number
         )
-        # Сохраняем значение в базу данных 
+        # Сохраняем значение в базу данных
         record_object = self.model(
-            invite_number=invite_number, 
+            invite_number=invite_number,
             invite_url=registration_url
         )
         record_object.save()
@@ -264,7 +266,6 @@ class GenerateInviteView(LoginRequiredMixin, View):
             'reg_url': registration_url,
         }
         return render(request, self.template_name, context=context)
-
 
     def __gen_invite_number(self):
         # Дата и время
