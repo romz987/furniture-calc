@@ -1,0 +1,28 @@
+{% extends 'furniture/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-sm">
+  <div class="card shadow mb-4 mt-5 custom-resp">
+
+    <! --Header -->
+    <div class="card-header bg-primary h6 text-white">
+      <i class="fa-regular fa-circle-user"></i>
+    </div>
+
+    <div class="card-body">
+      <div>
+        <div class="text-center mt-4">
+          <h3 class="text-dark">Ссылка на регистрацию</h3>
+          <p class="text-primary lead p-3">{{ invite.invite_url }}</p>
+          <br>
+        </div>
+        <a href="{% url 'users:manage-users' %}" class="btn btn-outline-secondary btn-lg px-4 mr-2">Назад</a>
+        <a href="{% url 'users:delete-invite' invite.id %}" class="btn btn-danger btn-lg px-4 mr-2 float-right">Удалить</a>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+{% endblock %}

@@ -31,7 +31,9 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image">
+                      <img src="{% static 'img/login-r.png' %}" alt="В ожидании" class="img-fluid py-4 rounded">
+                    </div>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -69,10 +71,10 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                              <a class="small" href="{% url 'users:password_recovery' %}">Забыли пароль?</a>
+                              <a class="small" href="{% url 'users:password-recovery' %}">Забыли пароль?</a>
                             </div>
                             <div class="text-center">
-                              <a class="small" href="{% url 'users:user_login' %}">Уже есть аккаунт? Авторизуйтесь!</a>
+                              <a class="small" href="{% url 'users:user-login' %}">Уже есть аккаунт? Авторизуйтесь!</a>
                             </div>
                         </div>
                     </div>

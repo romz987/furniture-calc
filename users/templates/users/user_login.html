@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Восстановление пароля</title>
+    <title>Авторизация пользователя</title>
 
     <!-- Custom fonts for this template-->
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -36,20 +36,40 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image py-4 pl-5">
+                              <img src="{% static 'img/login-r.png' %}" alt="В ожидании" class="img-fluid py-4 rounded">
+                            </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Восстановление пароля</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Авторизация</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="post" action="{% url 'users:user-login' %}">
+                                        {% csrf_token %}
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Введите адрес электронной почты">
+                                          {{ form.email }}
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Восстановить</button>
+                                        <div class="form-group">
+                                          {{ form.password }}
+                                          <div class="error-message text-danger" style="margin-top: 10px;">
+                                          {% for error in form.non_field_errors %}
+                                            {{ error }}
+                                          {% endfor %}
+                                          </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">Запомнить меня</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Логин</button>
                                     </form>
+                                    <hr>
+                                    <div class="text-center">
+                                      <a class="small" href="{% url 'users:password-recovery' %}">Забыли пароль?</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -75,5 +95,4 @@
 </body>
 
 </html>
-
 

@@ -27,6 +27,7 @@
               <th>Телефон</th>
               <th>Telegram</th>
               <th>Статус</th>
+              <th>Инвайт</th>
               <th>Изменить</th>
             </tr>
           </thead>
@@ -45,8 +46,9 @@
                     Неактивен
                   {% endif %}
                 </td>
+                <td>{{ object.invite_number }}</td>
                 <td>
-                  <a href="{% url 'users:toggle_user_activity' object.id %}" style="cursor: pointer;">
+                  <a href="{% url 'users:toggle-user-activity' object.id %}" style="cursor: pointer;">
                   {% if object.is_active %}
                     Деактивировать
                   {% else %}
@@ -97,7 +99,7 @@
         </table>
       </div>
 
-      <a href="{% url 'users:generate_invite' %}" class="btn btn-success btn-lg px-4 mt-5">Создать</a>
+      <a href="{% url 'users:generate-invite' %}" class="btn btn-success btn-lg px-4 mt-5">Создать</a>
     </div>
   </div>
 </div>
