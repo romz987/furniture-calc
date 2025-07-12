@@ -39,7 +39,7 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Создать аккаунт</h1>
                             </div>
-                            <form method="post" class="user">
+                            <form method="post" class="user user-register">
                                 {% csrf_token %}
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -93,6 +93,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    <script src="{% static 'js/validation-main.js' %}"></script>
 
 </body>
 
