@@ -28,6 +28,6 @@ urlpatterns = [
     path('order_update/<int:pk>/', WardrobeOrderUpdateView.as_view(), name='wardrobe_order_update'),
     # management
     path('management/wardrobe-deactivated/', wardrobe_deactivated_list_view, name='wardrobe_deactivated'),
-    path('management/togggle-order-activity/<int:pk>/', toggle_order_active_view, name='toggle_order_activity'),
+    path('management/toggle-order-activity/<int:pk>/', toggle_order_active_view, name='toggle_order_activity'),
     path('management/wardrobe-deactivated-details/<int:pk>/', WardrobeDeactivatedDetailView.as_view(), name='wardrobe_deactivated_details'),
 ]

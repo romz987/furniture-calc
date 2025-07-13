@@ -36,7 +36,7 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='user-profile'),
     # admin
     path('management/manage-users/', manage_users_view, name='manage-users'),
-    path('management/togggle-user-activity/<int:pk>/', toggle_user_active_view, name="toggle-user-activity"),
+    path('management/toggle-user-activity/<int:pk>/', toggle_user_active_view, name="toggle-user-activity"),
     path('management/generate-invite/', GenerateInviteView.as_view(), name="generate-invite"),
     path('management/invite-details/<int:pk>/', invite_details_view, name="invite-details"),
     path('management/delete-invite/<int:pk>/', delete_invite_view, name="delete-invite"),

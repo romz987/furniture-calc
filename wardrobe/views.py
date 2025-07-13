@@ -427,14 +427,15 @@ def wardrobe_deactivated_list_view(request):
 
 @login_required
 def toggle_order_active_view(request, pk):
-    # Проверка привилегий
-    if not request.user.is_superuser:
+    order = get_object_or_404(Orders, pk=pk)
+    # Проверка владельца
+    if (order.owner != request.user and
+            not request.user.is_superuser):
         raise Http404
     # Меняем активность
-    order = get_object_or_404(Orders, pk=pk)
     order.is_active = not order.is_active
     order.save()
-    return redirect('wardrobe:wardrobe_deactivated')
+    return redirect('wardrobe:show_wardrobe_orders')
 
 
 class WardrobeDeactivatedDetailView(LoginRequiredMixin, View):
