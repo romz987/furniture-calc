@@ -5,8 +5,8 @@ class MaterialType(models.Model):
     name = models.CharField(max_length=15, unique=True, verbose_name='материал') 
 
     class Meta:
-        verbose_name = 'material'
-        verbose_name_plural = 'materials'
+        verbose_name = 'Тип материала'
+        verbose_name_plural = 'Типы материалов'
 
     def __str__(self):
         return f'{self.name}'
@@ -16,8 +16,8 @@ class MaterialThickness(models.Model):
     thickness = models.SmallIntegerField(unique=True, verbose_name='толщина') 
 
     class Meta:
-        verbose_name = 'thickness'
-        verbose_name_plural = 'thickness'
+        verbose_name = 'Толщина'
+        verbose_name_plural = 'Толщины'
 
     def __str__(self):
         return f'{self.thickness}'
@@ -27,8 +27,8 @@ class MaterialColor(models.Model):
     name = models.CharField(max_length=25, unique=True, verbose_name='цвет')
 
     class Meta:
-        verbose_name = 'color'
-        verbose_name_plural = 'colors'
+        verbose_name = 'Цвет'
+        verbose_name_plural = 'Цвета'
 
     def __str__(self):
         return f'{self.name}'
@@ -38,8 +38,8 @@ class DoorType(models.Model):
     name = models.CharField(max_length=25, unique=True, verbose_name='тип дверей')
 
     class Meta:
-        verbose_name = 'door type'
-        verbose_name_plural = 'door types'
+        verbose_name = 'Тип дверей'
+        verbose_name_plural = 'Типы дверей'
 
     def __str__(self):
         return f'{self.name}'
@@ -79,8 +79,8 @@ class DoorHandle(models.Model):
     price_per_one = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='цена за единицу')
 
     class Meta:
-        verbose_name = 'door handle'
-        verbose_name_plural = 'door handles'
+        verbose_name = 'Дверная ручка'
+        verbose_name_plural = 'Дверные ручки'
         unique_together = ('name', 'length', 'material', 'color')
 
     def __str__(self):

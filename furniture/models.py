@@ -10,5 +10,5 @@ class Furniture(models.Model):
         return f'{self.name}'
 
     class Meta:
-        verbose_name = 'furniture'
-        verbose_name_plural = 'furniture'
+        verbose_name = 'Мебель'
+        verbose_name_plural = 'Мебель'
